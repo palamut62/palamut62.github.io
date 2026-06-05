@@ -58,7 +58,6 @@
        class="flex items-center gap-1.5 text-xs font-semibold rounded-lg px-3 py-2 shadow-sm backdrop-blur transition-all">
       <i class="fa-brands fa-github text-sm"></i>
     </a>
-    <i id="paletteIcon" class="fa-solid fa-palette text-sm opacity-70"></i>
     <select id="picker"
       class="appearance-none cursor-pointer text-xs font-semibold rounded-lg pl-3 pr-8 py-2 shadow-sm backdrop-blur focus:outline-none transition-all">
     </select>
@@ -301,7 +300,6 @@
   const projBtns = document.querySelectorAll(".proj-btn");
   const picker  = document.getElementById("picker");
   const repoLink = document.getElementById("repoLink");
-  const paletteIcon = document.getElementById("paletteIcon");
 
   // base classes that stay constant (so we can re-apply skins cleanly)
   const baseCard   = "pf-card w-full max-w-lg p-6 text-center relative overflow-hidden";
@@ -327,7 +325,6 @@
     // theme the top-right controls (repo button, palette icon, style picker)
     repoLink.className = baseRepo + " " + t.social;
     picker.className   = basePicker + " " + t.social;
-    paletteIcon.style.color = t.accent;
     // dropdown chevron color follows the theme (light on dark themes)
     const chev = t.dark ? "%23e5e7eb" : "%23475569";
     picker.style.backgroundImage = "url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22" + chev + "%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%226 9 12 15 18 9%22/></svg>')";
