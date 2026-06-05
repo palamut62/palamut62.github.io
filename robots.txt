@@ -1,0 +1,7 @@
+# robots.txt — Umut Çelik Portfolio
+# https://palamut62.github.io/portfolio/
+
+User-agent: *
+Allow: /
+
+Sitemap: https://palamut62.github.io/portfolio/sitemap.xml
