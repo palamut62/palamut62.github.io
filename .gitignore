@@ -1,7 +1,21 @@
+# OS / editor / tooling
 .*
-*.md
+!.gitignore
+
+# Research & planning docs (not part of the app)
+ANALIZ.md
+ARASTIRMA.md
+CONTEXT.md
+KALITE_RAPORU.md
+SPEK.md
+TEST_SONUC.md
+
+# Design playground (development tool, not shipped)
+tasar_m_stilleri_oyun_alan.html
+
+# Dev / deploy scripts
 scripts/
-vercel.json
-robots.txt
-sitemap.xml
-404.html
+
+# Unused legacy assets (replaced by the new single-file app)
+css/
+js/
