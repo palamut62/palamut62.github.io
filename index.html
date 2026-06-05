@@ -357,6 +357,10 @@
     const o = document.createElement("option");
     o.value = t.id;
     o.textContent = t.name;
+    // Always readable in the native dropdown list (independent of the
+    // select's themed text color, which can be white on dark themes).
+    o.style.color = "#1e293b";
+    o.style.background = "#ffffff";
     picker.appendChild(o);
   });
   picker.addEventListener("change", () => {
