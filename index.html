@@ -25,7 +25,22 @@
 
     body { transition: background 0.4s ease, color 0.4s ease; }
     .pf-card { transition: all 0.4s ease; }
-    .pf-card .social-link { transition: all .2s ease; }
+
+    /* Universal hover feedback for every theme (some themes' tailwind classes
+       don't define a hover: state, so guarantee it here). */
+    #pf-github, .proj-btn, .social-link, #picker, a[title="Bu sayfanın repo'su"] {
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease, background .18s ease;
+    }
+    #pf-github:hover, .proj-btn:hover, .social-link:hover,
+    #picker:hover, a[title="Bu sayfanın repo'su"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+      filter: brightness(1.06);
+    }
+    #pf-github:active, .proj-btn:active, .social-link:active {
+      transform: translateY(0);
+      filter: brightness(0.97);
+    }
 
     /* Style picker bar */
     #picker::-webkit-scrollbar { height: 6px; }
