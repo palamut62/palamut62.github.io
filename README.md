@@ -2,7 +2,8 @@
 <p align="center">A single-page personal portfolio with a live, switchable design system — 19 UI styles in one page.</p>
 
 <p align="center">
-  <a href="https://palamut62.github.io">Live Demo</a> ·
+  <a href="https://palamut62-portfolio.vercel.app">Live Demo (Vercel)</a> ·
+  <a href="https://palamut62.github.io">GitHub Pages</a> ·
   <a href="https://github.com/palamut62/palamut62.github.io">Repo</a>
 </p>
 
@@ -83,7 +84,9 @@ Then open `http://localhost:8000`.
 
 ## Deployment
 
-The site is deployed on **Vercel** as a static project (`outputDirectory: "."`).
+The site is deployed on **Vercel** as a static project (`outputDirectory: "."`):
+
+- **Production:** https://palamut62-portfolio.vercel.app
 
 ```bash
 vercel --prod
