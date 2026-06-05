@@ -4,66 +4,320 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Umut Çelik</title>
-  <meta name="description" content="Full-stack Developer · AI Agents & Automation · Founder @ nootle.io">
+  <meta name="description" content="Full-stack Developer · AI Agents & Automation">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%236366f1'>✦</text></svg>">
+  <style>
+    /* ---- Style-specific surfaces (from design playground) ---- */
+    .glass-panel { background: rgba(255,255,255,0.08); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); }
+    .neu-flat { background: #e0e0e0; box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff; }
+    .dark .neu-flat { background: #1e1e1e; box-shadow: 6px 6px 12px #121212, -6px -6px 12px #2a2a2a; }
+    .acrylic-win { background: rgba(243,243,243,0.65); backdrop-filter: blur(20px) saturate(125%); border: 1px solid rgba(255,255,255,0.4); }
+    .dark .acrylic-win { background: rgba(32,32,32,0.75); backdrop-filter: blur(20px) saturate(125%); border: 1px solid rgba(255,255,255,0.06); }
+    .win98-window { background: #d4d0c8 !important; box-shadow: 1px 1px 0 0 #000; }
+    .win98-outset { border: 2px solid; border-color: #ffffff #808080 #808080 #ffffff; }
+    .brutal-card { background: #fff; border: 3px solid #000; box-shadow: 8px 8px 0 0 #000; }
+    .clay-card { background: #ffecf2; box-shadow: 10px 10px 24px rgba(0,0,0,0.08), inset -8px -8px 16px rgba(0,0,0,0.1), inset 8px 8px 16px rgba(255,255,255,0.8); }
+
+    body { transition: background 0.4s ease, color 0.4s ease; }
+    .pf-card { transition: all 0.4s ease; }
+    .pf-card .social-link { transition: all .2s ease; }
+
+    /* Style picker bar */
+    #picker::-webkit-scrollbar { height: 6px; }
+    #picker::-webkit-scrollbar-thumb { background: rgba(128,128,128,.45); border-radius: 4px; }
+    .pick-btn.active { outline: 2px solid currentColor; outline-offset: 2px; }
+  </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center justify-center font-sans antialiased px-4 py-20">
 
-  <main class="main">
-    <div class="container">
+  <!-- STYLE PICKER (minimal combobox, top-right) -->
+  <div class="fixed top-4 right-4 z-50 flex items-center gap-2">
+    <a href="https://github.com/palamut62/palamut62.github.io" target="_blank" rel="noopener noreferrer"
+       title="Bu sayfanın repo'su"
+       class="flex items-center gap-1.5 text-xs font-semibold rounded-lg px-3 py-2 bg-white/70 text-slate-800 border border-black/10 shadow-sm backdrop-blur hover:bg-white/90 transition-all">
+      <i class="fa-brands fa-github text-sm"></i>
+      <span class="hidden sm:inline">Repo</span>
+    </a>
+    <i class="fa-solid fa-palette text-sm opacity-60"></i>
+    <select id="picker"
+      class="appearance-none cursor-pointer text-xs font-semibold rounded-lg pl-3 pr-8 py-2 bg-white/70 text-slate-800 border border-black/10 shadow-sm backdrop-blur focus:outline-none focus:ring-2 focus:ring-black/20"
+      style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23555%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%226 9 12 15 18 9%22/></svg>');background-repeat:no-repeat;background-position:right 0.5rem center;background-size:14px;">
+    </select>
+  </div>
 
-      <!-- Avatar -->
-      <div class="avatar">UC</div>
+  <!-- PORTFOLIO CARD -->
+  <main id="card" class="pf-card w-full max-w-lg p-8 sm:p-10 text-center relative overflow-hidden">
 
-      <!-- Name -->
-      <h1 class="name">Umut Çelik</h1>
-
-      <!-- Tagline -->
-      <p class="tagline">
-        Full-stack Developer &middot; AI Agents &amp; Automation<br>
-        <span class="tagline--muted">Founder @ <a href="https://nootle.io" target="_blank" rel="noopener" class="link">nootle.io</a></span>
-      </p>
-
-      <!-- Bio -->
-      <p class="bio">
-        Building tools at the intersection of AI agents, automation, and clean software.
-        Currently diving deep into Rust, Tauri, and agentic AI systems.
-      </p>
-
-      <!-- GitHub (replaces projects section) -->
-      <a href="https://github.com/palamut62" target="_blank" rel="noopener noreferrer" class="github-link">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        <span>github.com/palamut62</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-      </a>
-
-      <!-- Social links -->
-      <div class="socials">
-        <a href="https://github.com/palamut62" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        </a>
-        <a href="https://x.com/palamut62" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="X / Twitter">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="https://linkedin.com/in/palamut62" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        </a>
-        <a href="mailto:umut@nootle.io" class="social-link" aria-label="Email">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        </a>
-      </div>
-
+    <div id="avatar" class="w-24 h-24 mx-auto mb-6 rounded-2xl overflow-hidden flex items-center justify-center">
+      <img src="assets/avatar.jpg" alt="Umut Çelik" class="w-full h-full object-cover">
     </div>
+
+    <h1 id="pf-name" class="text-3xl font-bold tracking-tight mb-3">Umut Çelik</h1>
+
+    <p id="pf-tagline" class="text-sm leading-relaxed mb-1">
+      Full-stack Developer &middot; AI Agents &amp; Automation
+    </p>
+
+    <p id="pf-bio" class="text-sm leading-relaxed opacity-80 mt-4 mb-6 max-w-sm mx-auto">
+      Building tools at the intersection of AI agents, automation, and clean software.
+      Currently diving deep into Rust, Tauri, and agentic AI systems.
+    </p>
+
+    <a href="https://github.com/palamut62" target="_blank" rel="noopener noreferrer"
+       id="pf-github"
+       class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold mb-6 transition-all">
+      <i class="fa-brands fa-github text-lg"></i>
+      <span>github.com/palamut62</span>
+      <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
+    </a>
+
+    <!-- Projects -->
+    <div class="flex flex-col gap-2 mb-6 max-w-sm mx-auto">
+      <a href="https://wmole.vercel.app" target="_blank" rel="noopener noreferrer"
+         class="proj-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all">
+        <i class="fa-solid fa-cube text-base"></i>
+        <span class="flex-1 text-left">wmole</span>
+        <span class="opacity-50 text-xs">wmole.vercel.app</span>
+        <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
+      </a>
+      <a href="https://github-repo-cleaner-aiwebpage.vercel.app/" target="_blank" rel="noopener noreferrer"
+         class="proj-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all">
+        <i class="fa-solid fa-broom text-base"></i>
+        <span class="flex-1 text-left">GitHub Repo Cleaner</span>
+        <span class="opacity-50 text-xs">vercel.app</span>
+        <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-70"></i>
+      </a>
+    </div>
+
+    <div id="pf-socials" class="flex justify-center gap-3">
+      <a href="https://github.com/palamut62" target="_blank" rel="noopener noreferrer" class="social-link w-11 h-11 rounded-xl flex items-center justify-center" aria-label="GitHub"><i class="fa-brands fa-github text-lg"></i></a>
+      <a href="https://x.com/palamut62" target="_blank" rel="noopener noreferrer" class="social-link w-11 h-11 rounded-xl flex items-center justify-center" aria-label="X"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="https://linkedin.com/in/palamut62" target="_blank" rel="noopener noreferrer" class="social-link w-11 h-11 rounded-xl flex items-center justify-center" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in text-lg"></i></a>
+      <a href="mailto:umut@nootle.io" class="social-link w-11 h-11 rounded-xl flex items-center justify-center" aria-label="Email"><i class="fa-solid fa-envelope text-lg"></i></a>
+    </div>
+
   </main>
 
-  <footer class="footer">
-    <p>&copy; 2025 Umut Çelik</p>
-  </footer>
+  <footer class="mt-8 text-xs opacity-50" id="pf-footer">&copy; 2025 Umut Çelik</footer>
 
-  <script src="js/main.js" defer></script>
+  <script>
+  // ===== 19 design styles from the playground, adapted to the portfolio card =====
+  // Each theme defines: page background, card classes, text/accent colors, font, dark-mode flag,
+  // avatar / github-button / social-link skins.
+  const STORAGE_KEY = "pf_style";
+
+  const themes = [
+    { id:1,  name:"Glassmorphism", icon:"fa-wand-magic-sparkles", dark:true, font:"'Plus Jakarta Sans',sans-serif",
+      bg:"linear-gradient(135deg,#0f1729 0%,#1e1b4b 35%,#312e81 65%,#0f1729 100%)",
+      card:"glass-panel rounded-3xl text-white shadow-2xl", accent:"#f9a8d4",
+      avatar:"bg-white/15 border border-white/25 text-white",
+      gh:"bg-white text-slate-900 hover:bg-slate-100",
+      social:"bg-white/10 border border-white/20 text-white hover:bg-white/20" },
+
+    { id:2,  name:"Dark Developer", icon:"fa-code", dark:true, font:"'Fira Code',monospace",
+      bg:"#0a0a0a",
+      card:"bg-neutral-950 border border-neutral-800 rounded-xl text-emerald-400 shadow-2xl shadow-emerald-900/10", accent:"#34d399",
+      avatar:"bg-neutral-900 border border-emerald-500/40 text-emerald-400",
+      gh:"bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/20",
+      social:"bg-neutral-900 border border-neutral-800 text-emerald-400 hover:border-emerald-500/50" },
+
+    { id:3,  name:"Minimal Sidebar", icon:"fa-bars", dark:false, font:"'Inter',sans-serif",
+      bg:"#f8fafc",
+      card:"bg-white border border-slate-200 rounded-2xl text-slate-800 shadow-sm", accent:"#4f46e5",
+      avatar:"bg-slate-100 text-slate-700 border border-slate-200",
+      gh:"bg-slate-900 text-white hover:bg-slate-800",
+      social:"bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100" },
+
+    { id:4,  name:"Command Palette", icon:"fa-terminal", dark:true, font:"'Inter',sans-serif",
+      bg:"radial-gradient(circle at 50% 0%,#1e293b 0%,#020617 70%)",
+      card:"bg-slate-900/90 border border-slate-700 rounded-2xl text-slate-100 shadow-2xl ring-1 ring-white/5", accent:"#818cf8",
+      avatar:"bg-indigo-500/20 border border-indigo-400/40 text-indigo-300",
+      gh:"bg-indigo-600 text-white hover:bg-indigo-500",
+      social:"bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700" },
+
+    { id:5,  name:"Card Dashboard", icon:"fa-table-cells-large", dark:false, font:"'Plus Jakarta Sans',sans-serif",
+      bg:"#eef2ff",
+      card:"bg-white border border-slate-200 rounded-3xl text-slate-800 shadow-xl shadow-indigo-200/40", accent:"#6366f1",
+      avatar:"bg-gradient-to-br from-indigo-500 to-purple-500 text-white",
+      gh:"bg-indigo-600 text-white hover:bg-indigo-700",
+      social:"bg-indigo-50 border border-indigo-100 text-indigo-600 hover:bg-indigo-100" },
+
+    { id:6,  name:"Neumorphism", icon:"fa-circle-half-stroke", dark:false, font:"'Plus Jakarta Sans',sans-serif",
+      bg:"#e0e0e0",
+      card:"neu-flat rounded-[2rem] text-slate-700", accent:"#6d28d9",
+      avatar:"neu-flat text-slate-600",
+      gh:"neu-flat text-slate-700 hover:opacity-90",
+      social:"neu-flat text-slate-600" },
+
+    { id:7,  name:"Fluent / Win11", icon:"fa-brands fa-windows", dark:false, font:"'Inter',sans-serif",
+      bg:"linear-gradient(135deg,#c7d2fe 0%,#e0e7ff 40%,#fae8ff 100%)",
+      card:"acrylic-win rounded-xl text-slate-800 shadow-2xl", accent:"#2563eb",
+      avatar:"bg-white/70 border border-white/60 text-blue-700",
+      gh:"bg-blue-600 text-white hover:bg-blue-700 rounded-md",
+      social:"bg-white/60 border border-white/50 text-slate-700 hover:bg-white/80" },
+
+    { id:8,  name:"Split Panel", icon:"fa-table-columns", dark:false, font:"'Inter',sans-serif",
+      bg:"#0f172a",
+      card:"bg-slate-50 border-l-4 border-indigo-500 rounded-xl text-slate-800 shadow-2xl", accent:"#4338ca",
+      avatar:"bg-indigo-600 text-white",
+      gh:"bg-slate-900 text-white hover:bg-slate-800",
+      social:"bg-white border border-slate-200 text-slate-600 hover:bg-slate-100" },
+
+    { id:9,  name:"Kanban Board", icon:"fa-columns", dark:false, font:"'Plus Jakarta Sans',sans-serif",
+      bg:"#f1f5f9",
+      card:"bg-white border-t-4 border-amber-400 rounded-xl text-slate-800 shadow-lg", accent:"#d97706",
+      avatar:"bg-amber-100 text-amber-700 border border-amber-200",
+      gh:"bg-amber-500 text-white hover:bg-amber-600",
+      social:"bg-amber-50 border border-amber-100 text-amber-700 hover:bg-amber-100" },
+
+    { id:10, name:"Terminal Hybrid", icon:"fa-square-terminal", dark:true, font:"'Fira Code',monospace",
+      bg:"#020617",
+      card:"bg-[#0d1117] border border-slate-700 rounded-xl text-slate-200 shadow-2xl", accent:"#38bdf8",
+      avatar:"bg-slate-800 border border-sky-500/40 text-sky-400",
+      gh:"bg-sky-500/10 border border-sky-500/40 text-sky-300 hover:bg-sky-500/20",
+      social:"bg-slate-900 border border-slate-700 text-sky-300 hover:border-sky-500/50" },
+
+    { id:11, name:"Floating Window", icon:"fa-window-restore", dark:false, font:"'Inter',sans-serif",
+      bg:"linear-gradient(135deg,#fde68a 0%,#fca5a5 100%)",
+      card:"bg-white rounded-2xl text-slate-800 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] border border-white", accent:"#e11d48",
+      avatar:"bg-rose-100 text-rose-600 border border-rose-200",
+      gh:"bg-rose-600 text-white hover:bg-rose-700",
+      social:"bg-slate-50 border border-slate-200 text-slate-600 hover:bg-rose-50" },
+
+    { id:12, name:"Workspace", icon:"fa-objects-column", dark:true, font:"'Inter',sans-serif",
+      bg:"#111827",
+      card:"bg-slate-800 border border-slate-700 rounded-2xl text-slate-100 shadow-xl", accent:"#22d3ee",
+      avatar:"bg-cyan-500/15 border border-cyan-400/40 text-cyan-300",
+      gh:"bg-cyan-500 text-slate-900 hover:bg-cyan-400",
+      social:"bg-slate-700 border border-slate-600 text-cyan-300 hover:bg-slate-600" },
+
+    { id:13, name:"Settings-First", icon:"fa-sliders", dark:false, font:"'Inter',sans-serif",
+      bg:"#f8fafc",
+      card:"bg-white border border-slate-200 rounded-xl text-slate-700 shadow-md divide-y divide-slate-100", accent:"#0ea5e9",
+      avatar:"bg-sky-100 text-sky-600 border border-sky-200",
+      gh:"bg-sky-600 text-white hover:bg-sky-700",
+      social:"bg-slate-50 border border-slate-200 text-slate-600 hover:bg-sky-50" },
+
+    { id:14, name:"Data Table Admin", icon:"fa-table", dark:false, font:"'Inter',sans-serif",
+      bg:"#f9fafb",
+      card:"bg-white border border-slate-300 rounded-lg text-slate-800 shadow-sm", accent:"#475569",
+      avatar:"bg-slate-700 text-white",
+      gh:"bg-slate-800 text-white hover:bg-slate-700 rounded-md",
+      social:"bg-slate-100 border border-slate-300 text-slate-600 hover:bg-slate-200 rounded-md" },
+
+    { id:15, name:"AI Chat Panel", icon:"fa-robot", dark:true, font:"'Plus Jakarta Sans',sans-serif",
+      bg:"linear-gradient(160deg,#1e1b4b 0%,#0f172a 100%)",
+      card:"bg-slate-900/80 border border-indigo-500/30 rounded-3xl text-slate-100 shadow-2xl backdrop-blur", accent:"#a78bfa",
+      avatar:"bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white",
+      gh:"bg-violet-600 text-white hover:bg-violet-500",
+      social:"bg-white/5 border border-white/10 text-violet-200 hover:bg-white/10" },
+
+    { id:16, name:"Classic Windows", icon:"fa-window-maximize", dark:false, font:"Tahoma,'Segoe UI',sans-serif",
+      bg:"#008080",
+      card:"win98-window win98-outset text-black rounded-none", accent:"#000080",
+      avatar:"win98-outset bg-[#d4d0c8] text-black rounded-none",
+      gh:"win98-outset bg-[#d4d0c8] text-black hover:bg-[#cfcabf] rounded-none",
+      social:"win98-outset bg-[#d4d0c8] text-black rounded-none" },
+
+    { id:17, name:"Cyberpunk HUD", icon:"fa-microchip", dark:true, font:"'Fira Code',monospace",
+      bg:"radial-gradient(circle at 30% 20%,#0e7490 0%,#000 60%)",
+      card:"bg-black border-2 border-cyan-400 rounded-none text-cyan-300 shadow-[0_0_25px_rgba(34,211,238,0.35)]", accent:"#22d3ee",
+      avatar:"bg-cyan-400/10 border border-cyan-400 text-cyan-300 rounded-none",
+      gh:"bg-cyan-400 text-black hover:bg-cyan-300 rounded-none font-bold",
+      social:"border border-cyan-400 text-cyan-300 hover:bg-cyan-400/10 rounded-none" },
+
+    { id:18, name:"Neo-Brutalism", icon:"fa-bolt", dark:false, font:"'Plus Jakarta Sans',sans-serif",
+      bg:"#fde047",
+      card:"brutal-card rounded-none text-black", accent:"#000000",
+      avatar:"bg-pink-400 border-2 border-black text-black rounded-none",
+      gh:"bg-black text-white border-2 border-black hover:bg-slate-800 rounded-none",
+      social:"bg-white border-2 border-black text-black hover:bg-slate-100 rounded-none" },
+
+    { id:19, name:"Claymorphism", icon:"fa-cubes", dark:false, font:"'Plus Jakarta Sans',sans-serif",
+      bg:"#dbeafe",
+      card:"clay-card rounded-[2rem] text-slate-700", accent:"#7c3aed",
+      avatar:"bg-white text-violet-600 shadow-inner",
+      gh:"bg-violet-500 text-white hover:bg-violet-600 shadow-lg",
+      social:"bg-white text-violet-500 shadow-md" },
+  ];
+
+  // Per-theme avatar treatment: frame shape + image filter so the profile photo matches the vibe.
+  const avFx = {
+    2:  { radius:"0.75rem",  filter:"grayscale(1) brightness(1.05) sepia(.3) hue-rotate(80deg) saturate(2)" }, // dark dev: green tint
+    7:  { radius:"0.5rem",   filter:"saturate(1.1)" },                                   // fluent
+    10: { radius:"0.75rem",  filter:"grayscale(.6) contrast(1.15)" },                    // terminal
+    16: { radius:"0",        filter:"contrast(1.1) saturate(.7)" },                      // win98: sharp square
+    17: { radius:"0",        filter:"saturate(1.6) hue-rotate(150deg) contrast(1.2)" },  // cyberpunk: neon
+    18: { radius:"0",        filter:"grayscale(1) contrast(1.4)" },                      // brutalism: hard B/W
+    6:  { radius:"1.5rem",   filter:"contrast(.95)" },                                   // neumorphism: soft
+    19: { radius:"1.75rem",  filter:"saturate(1.05)" },                                  // claymorphism: soft
+  };
+
+  const card    = document.getElementById("card");
+  const avatar  = document.getElementById("avatar");
+  const avatarImg = avatar.querySelector("img");
+  const ghBtn   = document.getElementById("pf-github");
+  const socials = document.querySelectorAll("#pf-socials .social-link");
+  const projBtns = document.querySelectorAll(".proj-btn");
+  const picker  = document.getElementById("picker");
+
+  // base classes that stay constant (so we can re-apply skins cleanly)
+  const baseCard   = "pf-card w-full max-w-lg p-8 sm:p-10 text-center relative overflow-hidden";
+  const baseAvatar = "w-24 h-24 mx-auto mb-6 rounded-2xl overflow-hidden flex items-center justify-center";
+  const baseGh     = "inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold mb-6 transition-all";
+  const baseSocial = "social-link w-11 h-11 rounded-xl flex items-center justify-center";
+  const baseProj   = "proj-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all";
+
+  function applyTheme(t) {
+    document.documentElement.classList.toggle("dark", !!t.dark);
+    document.body.style.background = t.bg;
+    document.body.style.fontFamily = t.font;
+    document.body.style.color = "";
+
+    card.className   = baseCard + " " + t.card;
+    avatar.className = baseAvatar + " " + t.avatar;
+    ghBtn.className  = baseGh + " " + t.gh;
+    socials.forEach(s => s.className = baseSocial + " " + t.social);
+    projBtns.forEach(p => p.className = baseProj + " " + t.social);
+
+    // themed avatar frame: accent ring + matching shape + vibe filter
+    const fx = avFx[t.id] || { radius:"1rem", filter:"none" };
+    avatar.style.borderRadius = fx.radius;
+    avatar.style.boxShadow = "0 0 0 3px " + t.accent + "40, 0 0 0 1px " + t.accent;
+    avatar.style.padding = "3px";
+    avatar.style.background = t.accent + "22";
+    avatarImg.style.borderRadius = "calc(" + fx.radius + " - 3px)";
+    avatarImg.style.filter = fx.filter;
+
+    // accent for links
+    document.querySelectorAll(".pf-link").forEach(l => l.style.color = t.accent);
+
+    // sync combobox selection
+    picker.value = t.id;
+
+    localStorage.setItem(STORAGE_KEY, t.id);
+  }
+
+  // build picker options
+  themes.forEach(t => {
+    const o = document.createElement("option");
+    o.value = t.id;
+    o.textContent = t.name;
+    picker.appendChild(o);
+  });
+  picker.addEventListener("change", () => {
+    const t = themes.find(x => x.id === +picker.value);
+    if (t) applyTheme(t);
+  });
+
+  // load last selected (default = Glassmorphism)
+  const savedId = parseInt(localStorage.getItem(STORAGE_KEY) || "1", 10);
+  applyTheme(themes.find(t => t.id === savedId) || themes[0]);
+  </script>
 </body>
 </html>

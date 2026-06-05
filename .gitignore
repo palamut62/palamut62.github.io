@@ -1,1 +1,7 @@
-.vercel
+.*
+*.md
+scripts/
+vercel.json
+robots.txt
+sitemap.xml
+404.html

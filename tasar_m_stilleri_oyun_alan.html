@@ -1,0 +1,2735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Styles Playground & AI Prompt Library</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    boxShadow: {
+                        'neumorphic-in': 'inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff',
+                        'neumorphic-out': '5px 5px 10px #babecc, -5px -5px 10px #ffffff',
+                        'neumorphic-dark-in': 'inset 2px 2px 5px #121212, inset -5px -5px 10px #2a2a2a',
+                        'neumorphic-dark-out': '5px 5px 10px #121212, -5px -5px 10px #2a2a2a',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Glassmorphism custom styles */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .glass-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+        }
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Neumorphism custom styles */
+        .neu-bg {
+            background: #e0e0e0;
+        }
+        .dark .neu-bg {
+            background: #1e1e1e;
+        }
+        .neu-flat {
+            background: #e0e0e0;
+            box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
+        }
+        .dark .neu-flat {
+            background: #1e1e1e;
+            box-shadow: 6px 6px 12px #121212, -6px -6px 12px #2a2a2a;
+        }
+        .neu-pressed {
+            background: #e0e0e0;
+            box-shadow: inset 4px 4px 8px #bebebe, inset -4px -4px 8px #ffffff;
+        }
+        .dark .neu-pressed {
+            background: #1e1e1e;
+            box-shadow: inset 4px 4px 8px #121212, inset -4px -4px 8px #2a2a2a;
+        }
+
+        /* Windows 11 Acrylic */
+        .acrylic-win {
+            background: rgba(243, 243, 243, 0.65);
+            backdrop-filter: blur(20px) saturate(125%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .dark .acrylic-win {
+            background: rgba(32, 32, 32, 0.75);
+            backdrop-filter: blur(20px) saturate(125%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Classic Windows Form / 3D Retro Styles */
+        .win98-window {
+            background: #d4d0c8 !important;
+            box-shadow: 1px 1px 0px 0px #000000;
+        }
+        .win98-inset {
+            background: #ffffff;
+            border: 2px solid;
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+        .win98-outset {
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+        }
+        .win98-button {
+            background: #d4d0c8;
+            border: 2px solid;
+            border-color: #ffffff #808080 #808080 #ffffff;
+            outline: none;
+        }
+        .win98-button:active {
+            border-color: #808080 #ffffff #ffffff #808080;
+        }
+
+        /* Brutalism / Neo-Brutalism */
+        .brutal-card {
+            background: #fff;
+            border: 3px solid #000;
+            box-shadow: 5px 5px 0px 0px #000;
+        }
+        .dark .brutal-card {
+            background: #1e1e1e;
+            border: 3px solid #fff;
+            box-shadow: 5px 5px 0px 0px #fff;
+        }
+        .brutal-btn {
+            border: 2px solid #000;
+            box-shadow: 3px 3px 0px 0px #000;
+            transition: all 0.1s ease;
+        }
+        .brutal-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px 0px #000;
+        }
+
+        /* Claymorphism */
+        .clay-card {
+            background: #ffecf2;
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.06), 
+                        inset -8px -8px 16px rgba(0,0,0,0.1), 
+                        inset 8px 8px 16px rgba(255,255,255,0.8);
+        }
+        .dark .clay-card {
+            background: #2d1b24;
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.3), 
+                        inset -8px -8px 16px rgba(0,0,0,0.4), 
+                        inset 8px 8px 16px rgba(255,255,255,0.05);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans transition-colors duration-200 antialiased overflow-hidden h-screen flex flex-col">
+
+    <!-- TOP NAVIGATION -->
+    <header class="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 py-3 flex justify-between items-center z-10 shrink-0">
+        <div class="flex items-center space-x-3">
+            <div class="bg-indigo-600 text-white p-2 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <i class="fa-solid fa-wand-magic-sparkles text-lg animate-pulse"></i>
+            </div>
+            <div>
+                <h1 class="font-extrabold text-base tracking-tight flex items-center gap-2">
+                    UI Design Lab v2.5 <span class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-xs px-2.5 py-0.5 rounded-full font-medium">19 Premium Styles</span>
+                </h1>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400">At Least 10 Active Form Components Per Style & Live Event Log</p>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center space-x-3">
+            <button id="themeToggle" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-all" title="Dark/Light Theme">
+                <i class="fa-solid fa-moon dark:hidden"></i>
+                <i class="fa-solid fa-sun hidden dark:inline"></i>
+            </button>
+            <a href="https://github.com/palamut62/desktop-ui-design-skills-pack" target="_blank" rel="noopener" class="flex items-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-semibold transition-all" title="GitHub Repo">
+                <i class="fa-brands fa-github text-base"></i> GitHub
+            </a>
+            <a href="#test" onclick="showStylesMatrix()" class="hidden md:flex items-center gap-1.5 px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-semibold transition-all">
+                <i class="fa-solid fa-layer-group"></i> Compare
+            </a>
+        </div>
+    </header>
+
+    <!-- MAIN AREA -->
+    <div class="flex-1 flex overflow-hidden">
+        
+        <!-- LEFT MENU: DESIGN SELECTOR -->
+        <aside class="w-80 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col shrink-0 overflow-y-auto">
+            <div class="p-4 border-b border-slate-100 dark:border-slate-800/60">
+                <span class="text-xs font-bold text-slate-400 dark:text-slate-500 tracking-wider uppercase">Design Templates</span>
+            </div>
+            <nav id="stylesMenu" class="p-2 space-y-1 flex-1">
+                <!-- Populated dynamically with JavaScript -->
+            </nav>
+            <!-- Bottom Live Event Logger -->
+            <div class="p-4 border-t border-slate-150 dark:border-slate-800/60 bg-slate-50 dark:bg-slate-950/20">
+                <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Live Form Events</span>
+                <div id="eventLog" class="h-24 bg-slate-900 text-emerald-400 rounded-lg p-2.5 font-mono text-[9px] overflow-y-auto space-y-1">
+                    <p class="text-slate-500">> Playground and event listener ready.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CENTER / RIGHT DETAIL: LIVE PREVIEW -->
+        <main class="flex-1 flex flex-col overflow-hidden bg-slate-100 dark:bg-slate-900/40 relative">
+            
+            <!-- STYLE DETAILS AND TAGS -->
+            <div class="px-6 py-4 border-b border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span id="activeStyleId" class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs px-2.5 py-0.5 rounded-md font-mono">STIL-1</span>
+                        <h2 id="activeStyleName" class="text-xl font-bold tracking-tight">Glassmorphism</h2>
+                    </div>
+                    <p id="activeStyleDesc" class="text-sm text-slate-500 dark:text-slate-400 mt-1">Transparent, frosted-glass panels with soft lighting</p>
+                </div>
+                <div class="flex items-center gap-2 self-start md:self-center">
+                    <span class="text-xs text-slate-400 dark:text-slate-500 font-medium">Best Fit:</span>
+                    <span id="activeStyleApp" class="bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-xs font-bold px-3 py-1.5 rounded-lg border border-indigo-100 dark:border-indigo-900/50">AI tool manager</span>
+                </div>
+            </div>
+
+            <!-- ACTIVE DESIGN SCREEN AND CODE DETAILS -->
+            <div class="flex-1 flex flex-col xl:flex-row overflow-hidden">
+                
+                <!-- LIVE PREVIEW AREA -->
+                <div class="flex-1 p-6 overflow-y-auto flex items-center justify-center relative min-h-[400px]">
+                    <!-- Dynamic Background Decorations -->
+                    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                        <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-400 dark:bg-purple-900/30 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-pulse"></div>
+                        <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-400 dark:bg-blue-900/30 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+                    </div>
+
+                    <!-- Container Where The Design Is Rendered -->
+                    <div id="demoContainer" class="w-full max-w-5xl h-full flex items-center justify-center z-10 transition-all duration-300 overflow-y-auto p-4 max-h-[80vh]">
+                        <!-- The selected design's UI HTML will be injected here with JavaScript -->
+                    </div>
+                </div>
+
+                <!-- CODE / GUIDE TEXT AREA AND AI MD FILE (Right Panel) -->
+                <div class="w-full xl:w-[480px] border-t xl:border-t-0 xl:border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col shrink-0 overflow-hidden">
+                    
+                    <!-- TAB HEADERS -->
+                    <div class="flex border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/40 shrink-0">
+                        <button id="tabBtnSecrets" onclick="switchRightTab('secrets')" class="flex-1 py-3 px-2 text-center font-bold text-xs border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-lightbulb"></i> Design Secrets
+                        </button>
+                        <button id="tabBtnCustomize" onclick="switchRightTab('customize')" class="flex-1 py-3 px-2 text-center font-semibold text-xs border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white flex items-center justify-center gap-1.5 transition-all">
+                            <i class="fa-solid fa-sliders"></i> Live Settings
+                        </button>
+                        <button id="tabBtnMd" onclick="switchRightTab('md')" class="flex-1 py-3 px-2 text-center font-semibold text-xs border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white flex items-center justify-center gap-1.5 transition-all">
+                            <i class="fa-solid fa-robot"></i> AI .MD Rule
+                        </button>
+                    </div>
+
+                    <!-- CONTENT: DESIGN SECRETS TAB AREA -->
+                    <div id="tabContentSecrets" class="flex-1 p-5 overflow-y-auto space-y-4 text-xs">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="font-bold text-slate-700 dark:text-slate-300 text-[11px] uppercase">Core CSS Classes:</h4>
+                                <button onclick="copyCSS()" class="text-[11px] text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 font-semibold flex items-center gap-1">
+                                    <i class="fa-solid fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <div class="bg-slate-50 dark:bg-slate-950 p-3 rounded-lg border border-slate-200/60 dark:border-slate-800/50">
+                                <code id="cssClassesBlock" class="text-xs text-rose-600 dark:text-rose-400 break-all font-mono">background: rgba(...)</code>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-[11px] uppercase mb-1">Design Tips:</h4>
+                            <ul id="styleTips" class="space-y-2 text-slate-600 dark:text-slate-400 list-disc list-inside">
+                                <!-- Tips loaded from JS -->
+                            </ul>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100 dark:border-slate-800">
+                            <h4 class="font-bold text-slate-700 dark:text-slate-300 text-[11px] uppercase mb-2">Apps That Pair Great With This Design:</h4>
+                            <div id="useCasesContainer" class="flex flex-wrap gap-1.5">
+                                <!-- Suggested application tags -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONTENT: LIVE SETTINGS (Live Customizer) -->
+                    <div id="tabContentCustomize" class="flex-1 p-5 overflow-y-auto space-y-5 hidden text-xs">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block border-b pb-2">Interface Variables Wizard</span>
+                        
+                        <div class="space-y-4">
+                            <!-- Accent Color Selection -->
+                            <div>
+                                <label class="block font-bold text-slate-600 dark:text-slate-400 mb-1.5">Interface Accent Color</label>
+                                <div class="grid grid-cols-5 gap-2">
+                                    <button onclick="setThemeColor('indigo-600')" class="w-full h-8 bg-indigo-600 rounded-lg border-2 border-transparent focus:border-black dark:focus:border-white"></button>
+                                    <button onclick="setThemeColor('emerald-500')" class="w-full h-8 bg-emerald-500 rounded-lg border-2 border-transparent focus:border-black dark:focus:border-white"></button>
+                                    <button onclick="setThemeColor('rose-500')" class="w-full h-8 bg-rose-500 rounded-lg border-2 border-transparent focus:border-black dark:focus:border-white"></button>
+                                    <button onclick="setThemeColor('cyan-400')" class="w-full h-8 bg-cyan-400 rounded-lg border-2 border-transparent focus:border-black dark:focus:border-white"></button>
+                                    <button onclick="setThemeColor('amber-500')" class="w-full h-8 bg-amber-500 rounded-lg border-2 border-transparent focus:border-black dark:focus:border-white"></button>
+                                </div>
+                            </div>
+
+                            <!-- Corner Roundness -->
+                            <div>
+                                <label class="block font-bold text-slate-600 dark:text-slate-400 mb-1">Corner Softness (Border Radius)</label>
+                                <div class="flex items-center gap-3">
+                                    <input type="range" id="inputRadius" min="0" max="24" value="12" class="w-full accent-indigo-600 cursor-pointer h-1 bg-slate-200 dark:bg-slate-800 rounded-lg" oninput="updateCustomizer()">
+                                    <span id="labelRadius" class="font-mono font-bold">12px</span>
+                                </div>
+                            </div>
+
+                            <!-- Padding / Density Ratio -->
+                            <div>
+                                <label class="block font-bold text-slate-600 dark:text-slate-400 mb-1">Inner Spacing Level (Padding)</label>
+                                <div class="flex items-center gap-3">
+                                    <input type="range" id="inputPadding" min="8" max="32" value="20" class="w-full accent-indigo-600 cursor-pointer h-1 bg-slate-200 dark:bg-slate-800 rounded-lg" oninput="updateCustomizer()">
+                                    <span id="labelPadding" class="font-mono font-bold">20px</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-indigo-50 dark:bg-indigo-950/30 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900/50 text-[11px] text-indigo-800 dark:text-indigo-300">
+                            <i class="fa-solid fa-sync animate-spin mr-1"></i>
+                            All changes you make are instantly reflected in the live preview component and the AI Markdown rule list.
+                        </div>
+                    </div>
+
+                    <!-- CONTENT: AI MD RULE FILE TAB AREA -->
+                    <div id="tabContentMd" class="flex-1 p-5 overflow-hidden flex flex-col space-y-3 hidden">
+                        <div class="flex justify-between items-center shrink-0">
+                            <div>
+                                <h4 class="font-bold text-slate-700 dark:text-slate-300 text-xs">AI Developer Rule File (.md)</h4>
+                                <p class="text-[10px] text-slate-400">Send the rules directly to Claude or Cursor tools.</p>
+                            </div>
+                            <button onclick="copyMdRules()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-[10px] flex items-center gap-1.5 shadow-sm transition-all">
+                                <i class="fa-solid fa-copy"></i> Copy Rules
+                            </button>
+                        </div>
+                        
+                        <div class="flex-1 overflow-y-auto bg-slate-900 text-slate-300 p-4 rounded-xl border border-slate-800 font-mono text-[11px] leading-relaxed relative">
+                            <pre id="mdRulesCodeBlock" class="whitespace-pre-wrap select-all">Loading system rules...</pre>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- COMPARISON MODAL SHOWING ALL DESIGNS TOGETHER -->
+    <div id="matrixModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8 hidden">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-7xl h-full max-h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 dark:border-slate-800">
+            <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950/50">
+                <div>
+                    <h3 class="text-lg font-bold">19 Design Style Matrix</h3>
+                    <p class="text-xs text-slate-500">A quick overview of all newly added styles.</p>
+                </div>
+                <button onclick="hideStylesMatrix()" class="bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 p-2 rounded-xl transition-all">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="matrixGrid">
+                    <!-- JavaScript will populate dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-2.5 rounded-xl text-xs font-semibold shadow-lg translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-green-500"></i>
+        <span id="toastMessage">Copied successfully!</span>
+    </div>
+
+    <script>
+        // DESIGN DATA (19 styles - each fully expanded to contain at least 10 different active form elements)
+        const designStyles = [
+            {
+                id: 1,
+                name: "Glassmorphism",
+                desc: "Transparent, frosted-glass panels with soft light bleeding from behind.",
+                app: "AI tool manager, dashboard, repo analysis tool",
+                icon: "fa-solid fa-wand-magic-sparkles",
+                classes: "bg-white/10 dark:bg-slate-900/50 backdrop-blur-md border border-white/20 dark:border-white/5 shadow-2xl rounded-3xl",
+                tips: [
+                    "Use bright gradients in the background so the blur (backdrop-filter: blur) is clearly noticeable.",
+                    "Add white borders at 15-20% opacity to make edges stand out.",
+                    "Prefer high-contrast white colors for text."
+                ],
+                useCases: ["AI Dashboard", "SaaS Analytics", "Crypto Wallet", "Weather Prototype"],
+                html: `
+                <div class="w-full max-w-2xl rounded-3xl p-6 relative overflow-hidden shadow-2xl" style="background: linear-gradient(135deg, #0f1729 0%, #1e1b4b 35%, #312e81 65%, #0f1729 100%); padding: var(--custom-padding);">
+                    <div class="absolute -top-16 -left-16 w-44 h-44 bg-purple-500/25 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-12 -right-12 w-44 h-44 bg-blue-500/20 rounded-full blur-3xl"></div>
+                    <div class="absolute top-1/3 left-1/3 w-32 h-32 bg-pink-400/15 rounded-full blur-3xl"></div>
+                    <div class="w-full max-w-xl p-6 rounded-[var(--custom-radius)] text-white glass-panel relative overflow-hidden shadow-2xl transition-all z-10" style="padding: var(--custom-padding);">
+                        <div class="absolute -top-10 -right-10 w-28 h-28 bg-[var(--accent-color,theme(colors.pink.500))] rounded-full blur-2xl opacity-40"></div>
+
+                    <div class="relative z-10 space-y-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-[10px] bg-white/20 text-white px-2 py-0.5 rounded-full border border-white/20">Module #1: Setup</span>
+                                <h3 class="text-base font-bold mt-1 text-white">Smart Agent Panel</h3>
+                            </div>
+                            <span class="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded font-bold">Active</span>
+                        </div>
+
+                        <!-- Form Containing 10+ Different Elements -->
+                        <div class="space-y-3 text-white text-xs">
+                            <!-- 1. Text Input -->
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-300 uppercase">Agent Name (Input)</label>
+                                <input type="text" id="g_agent_name" class="w-full px-3 py-1.5 rounded-xl text-xs glass-input placeholder-white/30" placeholder="e.g. Codex_Alpha_v2">
+                            </div>
+
+                            <!-- 2. Select -->
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-300 uppercase">Agent Model (Select)</label>
+                                <select id="g_agent_model" class="w-full px-3 py-1.5 rounded-xl text-xs glass-input bg-slate-900/60">
+                                    <option value="gemini">Gemini 2.5 Flash</option>
+                                    <option value="deepseek">DeepSeek R1</option>
+                                    <option value="claude">Claude 3.5 Sonnet</option>
+                                </select>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <!-- 3. Slider (Range) -->
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-300 uppercase">Creativity (Slider): <span id="g_tempVal" class="text-pink-300">0.7</span></label>
+                                    <input type="range" id="g_temp" min="0" max="1" step="0.1" value="0.7" class="w-full accent-white bg-white/10 rounded-lg cursor-pointer">
+                                </div>
+                                <!-- 4. Multi-Select/Dropdown 2 -->
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-300 uppercase">Memory Type (Select)</label>
+                                    <select id="g_memory" class="w-full px-3 py-1.5 rounded-xl text-xs glass-input bg-slate-900/60">
+                                        <option>Short-Term (Context)</option>
+                                        <option>Vector Database</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 5. Checkbox & 6. Radio Groups -->
+                            <div class="grid grid-cols-2 gap-3 bg-white/5 p-2 rounded-xl border border-white/10">
+                                <div class="space-y-1">
+                                    <span class="block text-[9px] font-bold text-slate-300 uppercase">Confirmations (Checkboxes)</span>
+                                    <label class="flex items-center gap-1.5 text-[11px] cursor-pointer">
+                                        <input type="checkbox" id="g_grounding" checked class="rounded accent-indigo-500 bg-white/10">
+                                        <span>Web Search</span>
+                                    </label>
+                                </div>
+                                <div class="space-y-1">
+                                    <span class="block text-[9px] font-bold text-slate-300 uppercase">Response Format (Radios)</span>
+                                    <div class="flex flex-col gap-1 text-[11px]">
+                                        <label class="flex items-center gap-1 cursor-pointer">
+                                            <input type="radio" id="g_format_json" name="g_format" checked class="accent-indigo-500">
+                                            <span>JSON format</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. Textarea -->
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-300 uppercase">Description (Textarea)</label>
+                                <textarea id="g_description" rows="2" class="w-full px-3 py-1.5 rounded-xl text-xs glass-input placeholder-white/30" placeholder="Write the agent instructions here..."></textarea>
+                            </div>
+
+                            <!-- 8. Progress Bar -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[9px] text-slate-300">
+                                    <span>Memory Usage (Progress)</span>
+                                    <span>64%</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="w-[64%] h-full bg-pink-400"></div>
+                                </div>
+                            </div>
+
+                            <!-- 9. List / Table Element -->
+                            <div class="bg-white/5 p-2 rounded-xl border border-white/10 max-h-20 overflow-y-auto space-y-1 text-[10px]">
+                                <div class="flex justify-between border-b border-white/5 pb-1">
+                                    <span>System Log:</span>
+                                    <span class="text-emerald-400 font-mono">Running</span>
+                                </div>
+                                <div class="font-mono text-[9px] text-slate-300">Agent startup parameters validated.</div>
+                            </div>
+                        </div>
+
+                        <!-- 10. Buttons -->
+                        <div class="flex gap-2 pt-1">
+                            <button id="g_btn_start" class="flex-1 py-2 bg-white text-slate-900 font-bold text-xs rounded-xl hover:bg-slate-100 transition-all">
+                                Start Agent
+                            </button>
+                            <button id="g_btn_test" class="px-3 py-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs rounded-xl">
+                                Run Test
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                </div>`
+            },
+            {
+                id: 2,
+                name: "Dark Developer UI",
+                desc: "Black/dark-gray background, neon color accents, monospaced fonts and a terminal vibe.",
+                app: "Coding tools, Claude/Codex manager app",
+                icon: "fa-solid fa-code",
+                classes: "bg-neutral-950 text-emerald-400 font-mono border border-neutral-800 shadow-emerald-900/10 rounded-xl",
+                tips: [
+                    "Dark-gray background tones (#0a0a0a or #121212) are easy on the eyes.",
+                    "Give form element borders glowing neon tones when they are active.",
+                    "Apply a monospaced font family inside text boxes."
+                ],
+                useCases: ["Developer Consoles", "CLI Interfaces", "Data Analysis", "API Monitors"],
+                html: `
+                <div class="w-full max-w-xl bg-black rounded-[var(--custom-radius)] border border-neutral-800 font-mono text-xs overflow-hidden shadow-2xl text-left" style="padding: var(--custom-padding);">
+                    <!-- 1. Title Bar / Status Badge -->
+                    <div class="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
+                        <span class="text-neutral-400 font-bold">>>> system_compiler.sh</span>
+                        <span id="d_status" class="text-emerald-500 animate-pulse">● LIVE</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <!-- 2. Text Input -->
+                        <div>
+                            <label class="block text-[9px] text-emerald-500 uppercase tracking-widest mb-1">1. Run Parameter (Input)</label>
+                            <input type="text" id="d_cmd" class="w-full bg-neutral-900 border border-neutral-800 text-emerald-400 py-1.5 px-3 rounded-lg outline-none focus:border-emerald-500" value="python3 -m core_runner --epochs=150">
+                        </div>
+
+                        <!-- 3. Select 1 & 4. Select 2 -->
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[9px] text-neutral-400 uppercase mb-1">Compiler Version (Select)</label>
+                                <select id="d_compiler" class="w-full bg-neutral-900 border border-neutral-800 text-emerald-400 py-1.5 px-2 rounded-lg outline-none">
+                                    <option>GCC v12.2.0</option>
+                                    <option>Clang v15.0</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[9px] text-neutral-400 uppercase mb-1">Optimization Level</label>
+                                <select id="d_opt" class="w-full bg-neutral-900 border border-neutral-800 text-emerald-400 py-1.5 px-2 rounded-lg outline-none">
+                                    <option>-O3 (Maximum Speed)</option>
+                                    <option>-O0 (Debug)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 5. Slider (Range) -->
+                        <div>
+                            <label class="block text-[9px] text-neutral-400 uppercase mb-1">Maximum Memory Limit (Slider): <span id="d_memLimitVal">75</span>%</label>
+                            <div class="flex items-center gap-3 bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-1">
+                                <input type="range" id="d_memLimit" class="w-full accent-emerald-500 bg-neutral-800 cursor-pointer" min="10" max="100" value="75">
+                            </div>
+                        </div>
+
+                        <!-- 6. Checkbox & 7. Radio Groups -->
+                        <div class="grid grid-cols-2 gap-3 bg-neutral-950 p-2 border border-neutral-900 rounded-lg">
+                            <div class="space-y-1">
+                                <label class="flex items-center gap-1.5 text-[10px] text-neutral-400 cursor-pointer">
+                                    <input type="checkbox" id="d_verbose" checked class="accent-emerald-500">
+                                    <span>Verbose Log</span>
+                                </label>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex flex-col gap-1 text-[10px] text-neutral-400">
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="radio" id="d_stream_live" name="d_stream" checked class="accent-emerald-500">
+                                        <span>Live Stream</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8. Textarea -->
+                        <div>
+                            <label class="block text-[9px] text-neutral-400 uppercase mb-1">Pre-build Script</label>
+                            <textarea id="d_script" rows="2" class="w-full bg-neutral-900 border border-neutral-800 text-emerald-400 p-2 rounded-lg outline-none focus:border-emerald-500 font-mono text-[11px]">export CUDA_VISIBLE_DEVICES=0,1</textarea>
+                        </div>
+
+                        <!-- 9. Progress Bar -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[8px] text-neutral-500">
+                                <span>Build Status (Progress)</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="w-full h-1 bg-neutral-800 rounded-full overflow-hidden">
+                                <div class="w-[85%] h-full bg-emerald-500"></div>
+                            </div>
+                        </div>
+
+                        <!-- 10. Terminal Output Table / List -->
+                        <div class="bg-neutral-950 border border-neutral-900 p-2 rounded-lg text-[10px] space-y-1 max-h-20 overflow-y-auto">
+                            <div class="flex justify-between border-b border-neutral-900 pb-1">
+                                <span class="text-neutral-500">TASK</span>
+                                <span class="text-neutral-500">STATUS</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Docker Container build</span>
+                                <span class="text-emerald-400">Completed</span>
+                            </div>
+                        </div>
+
+                        <!-- 11. Buttons -->
+                        <div class="flex gap-2 justify-end pt-1">
+                            <button id="d_btn_abort" class="px-3 py-1.5 border border-neutral-800 text-neutral-400 hover:text-white rounded-lg transition-all hover:bg-neutral-900">
+                                Cancel
+                            </button>
+                            <button id="d_btn_run" class="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-black font-bold rounded-lg transition-all shadow-md">
+                                Build & Run
+                            </button>
+                        </div>
+                    </div>
+                </div>`
+            },
+            {
+                id: 3,
+                name: "Minimal Sidebar UI",
+                desc: "A slim/clean navigation menu on the left, a wide card-based content area on the right.",
+                app: "Budget tracker, subscription tracker, file manager",
+                icon: "fa-solid fa-grip-vertical",
+                classes: "bg-slate-50 dark:bg-slate-900 text-slate-800 border border-slate-200 dark:border-slate-800 rounded-2xl",
+                tips: [
+                    "Structure the left side as a narrow navigation bar and the right side as clean card-based form areas.",
+                    "Achieve simplicity by using generous white space around form elements."
+                ],
+                useCases: ["Budget Tracking", "Personal Library", "Subscription Management", "Cloud File Storage"],
+                html: `
+                <div class="w-full max-w-3xl bg-white dark:bg-slate-950 rounded-[var(--custom-radius)] shadow-xl flex border border-slate-200/80 dark:border-slate-800 overflow-hidden h-[390px] text-left">
+                    <!-- 1. Sol Sidebar Listesi -->
+                    <div class="w-44 bg-slate-50 dark:bg-slate-900/60 p-4 border-r border-slate-200/60 dark:border-slate-800 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-2 px-1">
+                                <div class="w-6 h-6 rounded bg-indigo-600 flex items-center justify-center text-white text-xs"><i class="fa-solid fa-wallet"></i></div>
+                                <span class="font-bold text-xs">Pockety Wallet</span>
+                            </div>
+                            <nav class="space-y-1 text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                                <a class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400"><i class="fa-solid fa-plus-circle"></i> Add</a>
+                                <a class="flex items-center gap-2 px-2.5 py-1.5 rounded-lg"><i class="fa-solid fa-list-check"></i> Report</a>
+                            </nav>
+                        </div>
+                        <span id="s_status_badge" class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-[9px] px-2 py-0.5 rounded font-bold text-center">Premium</span>
+                    </div>
+
+                    <!-- Right Form Area -->
+                    <div class="flex-1 p-6 overflow-y-auto bg-white dark:bg-slate-950 flex flex-col justify-between" style="padding: var(--custom-padding);">
+                        <div class="space-y-3.5">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase">Quick Expense Entry Form</h3>
+                            
+                            <div class="grid grid-cols-2 gap-3 text-xs">
+                                <!-- 2. Text Input -->
+                                <div>
+                                    <label class="block text-[10px] font-semibold text-slate-400 mb-1">Amount ($)</label>
+                                    <input type="number" id="s_amount" class="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg outline-none bg-transparent" value="150.00">
+                                </div>
+                                <!-- 3. Select -->
+                                <div>
+                                    <label class="block text-[10px] font-semibold text-slate-400 mb-1">Category</label>
+                                    <select id="s_category" class="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg outline-none bg-transparent">
+                                        <option>Software & SaaS</option>
+                                        <option>Groceries & Food</option>
+                                        <option>Rent & Bills</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 text-xs">
+                                <!-- 4. Slider -->
+                                <div>
+                                    <label class="block text-[10px] font-semibold text-slate-400 mb-1">Spending Limit: <span id="s_limitVal">500</span>$</label>
+                                    <input type="range" id="s_limit" class="w-full accent-indigo-600 cursor-pointer h-1" min="100" max="1000" value="500">
+                                </div>
+                                <!-- 5. Select 2 -->
+                                <div>
+                                    <label class="block text-[10px] font-semibold text-slate-400 mb-1">Payment Method</label>
+                                    <select id="s_payment" class="w-full px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg outline-none bg-transparent">
+                                        <option>Credit Card</option>
+                                        <option>Bank Transfer</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 6. Checkbox & 7. Radio Groups -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                                    <input type="checkbox" id="s_repeat" checked class="w-4 h-4 rounded text-indigo-600 border-slate-200">
+                                    <span>Recurring Expense</span>
+                                </label>
+                                <div class="flex flex-col gap-1 text-[11px] text-slate-600 dark:text-slate-400">
+                                    <label class="flex items-center gap-1 cursor-pointer">
+                                        <input type="radio" id="s_prio_high" name="s_prio" checked class="accent-indigo-600">
+                                        <span>High Priority</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 8. Textarea -->
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-400 mb-1">Custom Note</label>
+                                <textarea id="s_notes" rows="1" class="w-full px-3 py-1 border border-slate-200 dark:border-slate-800 rounded-lg text-xs outline-none bg-transparent" placeholder="Write the payment details..."></textarea>
+                            </div>
+
+                            <!-- 9. Progress Bar -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-[9px] text-slate-400">
+                                    <span>Monthly Budget Usage</span>
+                                    <span>30%</span>
+                                </div>
+                                <div class="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="w-[30%] h-full bg-indigo-600"></div>
+                                </div>
+                            </div>
+
+                            <!-- 10. Son Hareketler Listesi / Tablo -->
+                            <div class="border border-slate-100 dark:border-slate-800 rounded-lg p-1.5 text-[10px] text-slate-500 max-h-16 overflow-y-auto">
+                                <div class="flex justify-between border-b pb-0.5 mb-0.5 font-bold">
+                                    <span>Transaction</span>
+                                    <span>Amount</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Netflix Premium</span>
+                                    <span class="font-bold text-slate-800 dark:text-white">$15.99</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Buttons -->
+                        <div class="flex gap-2 pt-2 border-t border-slate-100 dark:border-slate-900 shrink-0">
+                            <button id="s_btn_submit" class="flex-1 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl">Save</button>
+                            <button id="s_btn_reset" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-xl">Cancel</button>
+                        </div>
+                    </div>
+                </div>`
+            },
+            {
+                id: 4,
+                name: "Command Palette UI",
+                desc: "Search-focused windows triggered by keyboard shortcuts (Ctrl+K) for searching and actions.",
+                app: "Rule manager, AI tool launcher, repo cleaner",
+                icon: "fa-solid fa-keyboard",
+                classes: "bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800",
+                tips: [
+                    "Offer the user a powerful single-line search box and make it the initial focus point."
+                ],
+                useCases: ["Tool Launchers", "Settings Consoles", "Rule/Filter Managers"],
+                html: `
+                <div class="w-full max-w-xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200/80 dark:border-slate-800 overflow-hidden text-left">
+                    <!-- 1. Search Input (Input) -->
+                    <div class="p-4 border-b border-slate-150 dark:border-slate-800 flex items-center gap-3">
+                        <i class="fa-solid fa-magnifying-glass text-slate-400 text-sm"></i>
+                        <input type="text" id="cp_search" placeholder="Search..." class="bg-transparent border-none outline-none text-xs w-full text-slate-800 dark:text-slate-100" value="Add rule...">
+                    </div>
+
+                    <div class="p-4 space-y-4">
+                        <!-- Configuration Section With 10+ Different Elements -->
+                        <div class="grid grid-cols-2 gap-3 text-xs text-slate-600 dark:text-slate-300">
+                            <!-- 2. Select -->
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase">Search Scope</label>
+                                <select id="cp_scope" class="w-full p-1.5 border dark:border-slate-800 rounded bg-transparent">
+                                    <option>All Projects</option>
+                                    <option>Active Folder Only</option>
+                                </select>
+                            </div>
+                            <!-- 3. Range Slider -->
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase">Scan Depth: <span id="cp_depthVal">3</span></label>
+                                <input type="range" id="cp_depth" min="1" max="10" value="3" class="w-full accent-indigo-600 h-1 mt-2">
+                            </div>
+                        </div>
+
+                        <!-- 4. Checkbox & 5. Radio Groups -->
+                        <div class="grid grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-950 p-2.5 rounded-lg border border-slate-100 dark:border-slate-900 text-xs">
+                            <div>
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="checkbox" id="cp_regex" checked class="rounded accent-indigo-600">
+                                    <span>Regex Matching</span>
+                                </label>
+                            </div>
+                            <div class="flex flex-col gap-1 text-[11px]">
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" id="cp_match_case" name="cp_match" checked class="accent-indigo-600">
+                                    <span>Case Sensitive</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 6. Textarea -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Matched Rules Template</label>
+                            <textarea id="cp_template" rows="2" class="w-full p-2 border dark:border-slate-800 rounded bg-transparent text-xs" placeholder="Write the regex formula here..."></textarea>
+                        </div>
+
+                        <!-- 7. Select 2 -->
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase">Output Format</label>
+                                <select id="cp_output" class="w-full p-1.5 border dark:border-slate-800 rounded bg-transparent">
+                                    <option>JSON Format</option>
+                                    <option>Text Log</option>
+                                </select>
+                            </div>
+                            <!-- 8. Progress Bar -->
+                            <div class="space-y-1">
+                                <span class="block text-[10px] font-bold text-slate-400 uppercase">Operation Progress</span>
+                                <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mt-2">
+                                    <div class="w-[45%] h-full bg-indigo-600"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9. List / Table Element -->
+                        <div class="border border-slate-100 dark:border-slate-800 rounded-lg p-2 text-[10px] text-slate-500 space-y-1 max-h-16 overflow-y-auto bg-slate-50/50 dark:bg-slate-950/20">
+                            <div class="flex justify-between border-b pb-1">
+                                <span>Rules / Files</span>
+                                <span class="text-indigo-600 font-bold">Apply</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>clean_repo_rules.yaml</span>
+                                <span class="text-slate-400">Ctrl+Alt+C</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 10. Buttons & 11. Status Badge -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-950/60 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-xs">
+                        <span id="cp_badge" class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 px-2 py-0.5 rounded text-[10px] font-bold font-mono">Module: Ready</span>
+                        <div class="flex gap-2">
+                            <button id="cp_btn_close" class="px-3 py-1.5 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-400">Close</button>
+                            <button id="cp_btn_exec" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold">Run Rule</button>
+                        </div>
+                    </div>
+                </div>`
+            },
+            {
+                id: 5,
+                name: "Card Dashboard UI",
+                desc: "Stat cards, small chart lines, recent transactions and quick action buttons.",
+                app: "Budget, subscription, GitHub repo organizer",
+                icon: "fa-solid fa-chart-simple",
+                classes: "grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl",
+                tips: [
+                    "Split various metrics into independent form-data cards and present a single data set per card."
+                ],
+                useCases: ["Sales Tracking Panel", "Project Health Monitor", "Personal KPI Tracking"],
+                html: `
+                <div class="w-full max-w-2xl bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-left space-y-4 shadow-lg">
+                    <!-- 1. Header & 2. Select -->
+                    <div class="flex justify-between items-center pb-3 border-b border-slate-100 dark:border-slate-800">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase block">Module Control Group</span>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-white">KPI Veri Dashboard</h3>
+                        </div>
+                        <select id="db_period" class="px-2.5 py-1.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[10px] rounded-lg outline-none text-slate-600">
+                            <option>Last 24 Hours</option>
+                            <option>Last 7 Days</option>
+                        </select>
+                    </div>
+
+                    <!-- Grid Cards With 10+ Components -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <!-- Kart 1 -->
+                        <div class="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-100 dark:border-slate-800 space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] text-slate-400 uppercase">AI Memory Limit</span>
+                                <!-- 3. Status Badge -->
+                                <span id="db_limit_badge" class="bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-[9px] px-1.5 py-0.5 rounded font-bold">80% Limit</span>
+                            </div>
+                            
+                            <!-- 4. Text Input -->
+                            <div>
+                                <label class="block text-[9px] text-slate-400 mb-1 uppercase">Directory Path (Input)</label>
+                                <input type="text" id="db_path" class="w-full p-1.5 border dark:border-slate-800 rounded bg-transparent" value="/var/ai_model/weights">
+                            </div>
+
+                            <!-- 5. Range Slider -->
+                            <div>
+                                <label class="block text-[9px] text-slate-400 uppercase mb-1">Memory Warning Threshold: <span id="db_limitVal">80</span>%</label>
+                                <input type="range" id="db_limit" class="w-full accent-blue-500 bg-slate-200 dark:bg-slate-800 rounded-lg h-1" min="50" max="100" value="80">
+                            </div>
+                        </div>
+
+                        <!-- Kart 2 -->
+                        <div class="bg-slate-50 dark:bg-slate-950 p-4 rounded-xl border border-slate-100 dark:border-slate-800 space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] text-slate-400 uppercase">Model Code</span>
+                                <!-- 6. Dropdown 2 -->
+                                <select id="db_engine" class="p-1 bg-transparent border rounded text-[10px] text-slate-500">
+                                    <option>GPT-4o-mini</option>
+                                    <option>DeepSeek-Coder</option>
+                                </select>
+                            </div>
+
+                            <!-- 7. Checkbox & 8. Radio Groups -->
+                            <div class="space-y-1.5 bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-100 dark:border-slate-800 text-[10px]">
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="checkbox" id="db_compress" checked class="accent-blue-500">
+                                    <span>Compress Input Packets</span>
+                                </label>
+                                <div class="flex gap-3 mt-1.5">
+                                    <label class="flex items-center gap-1 cursor-pointer">
+                                        <input type="radio" id="db_mode_live" name="db_mode" checked class="accent-blue-500">
+                                        <span>Live</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 9. Text Area (Textarea) -->
+                            <div>
+                                <label class="block text-[9px] text-slate-400 uppercase mb-1">System Alert Log Message</label>
+                                <textarea id="db_log_msg" rows="1" class="w-full p-1 border dark:border-slate-800 rounded bg-transparent text-[10px]" placeholder="e.g. Limit exceeded!"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 10. Progress Bar -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[9px] text-slate-400">
+                            <span>Overall System Resource Usage (Progress)</span>
+                            <span>62%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                            <div class="w-[62%] h-full bg-blue-500"></div>
+                        </div>
+                    </div>
+
+                    <!-- 11. Buttons -->
+                    <div class="flex justify-end gap-2 pt-2 border-t">
+                        <button id="db_btn_reset" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs rounded-xl">Reset Parameters</button>
+                        <button id="db_btn_submit" class="px-4 py-1.5 bg-blue-500 text-white font-bold text-xs rounded-xl shadow-md">Save Metrics</button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 6,
+                name: "Neumorphism",
+                desc: "Embossed buttons and control panels with soft shadow effects that curve outward and inward.",
+                app: "Personal notes, small tools, simple utility apps",
+                icon: "fa-solid fa-bezier-curve",
+                classes: "bg-[#e0e0e0] dark:bg-[#1e1e1e] text-slate-700 dark:text-slate-300 shadow-lg p-6 rounded-3xl",
+                tips: [
+                    "Keep the background color of all form elements exactly the same as the surface.",
+                    "Make inactive elements convex (neu-flat), and active input fields or pressed keys concave (neu-pressed)."
+                ],
+                useCases: ["Calculators", "Music Players", "Smartwatch UI"],
+                html: `
+                <div class="w-full max-w-md p-6 neu-flat rounded-[var(--custom-radius)] text-slate-700 dark:text-slate-300 text-left font-sans space-y-4" style="padding: var(--custom-padding);">
+                    <div class="flex justify-between items-center border-b border-slate-300 dark:border-neutral-800 pb-2">
+                        <span class="text-[10px] font-extrabold tracking-widest text-slate-400 block">NEUMORPHIC COMPONENT SETUP</span>
+                        <span id="n_badge" class="bg-[#d0d0d0] dark:bg-[#252525] text-[9px] px-2 py-0.5 rounded font-bold shadow-inner">V1.2</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <!-- 1. Text Input (Pressed) -->
+                            <div>
+                                <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Parameter Name</label>
+                                <input type="text" id="n_param" class="w-full px-3 py-1.5 neu-pressed bg-[#e0e0e0] dark:bg-[#1e1e1e] text-xs outline-none rounded-xl" value="Main_Engine_X">
+                            </div>
+                            <!-- 2. Select (Pressed) -->
+                            <div>
+                                <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Sampling</label>
+                                <select id="n_sampling" class="w-full px-3 py-1.5 neu-pressed bg-[#e0e0e0] dark:bg-[#1e1e1e] text-xs outline-none rounded-xl">
+                                    <option>Real-Time</option>
+                                    <option>Simulated</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 3. Slider (Pressed) -->
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Flow Rate (Slider): <span id="n_flowVal">60</span>%</label>
+                            <div class="neu-pressed bg-[#e0e0e0] dark:bg-[#1e1e1e] p-2.5 rounded-xl flex items-center">
+                                <input type="range" id="n_flow" class="w-full accent-indigo-500 cursor-pointer h-1 bg-slate-300 dark:bg-slate-800 rounded-lg" min="10" max="100" value="60">
+                            </div>
+                        </div>
+
+                        <!-- 4. Checkbox & 5. Radio Groups -->
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="neu-pressed bg-[#e0e0e0] dark:bg-[#1e1e1e] p-2.5 rounded-xl">
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="checkbox" id="n_compress" checked class="accent-indigo-500">
+                                    <span>Compress data</span>
+                                </label>
+                            </div>
+                            <div class="neu-pressed bg-[#e0e0e0] dark:bg-[#1e1e1e] p-2.5 rounded-xl flex flex-col gap-1">
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" id="n_mode_prod" name="n_mode" checked class="accent-indigo-500">
+                                    <span>Production Mode</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 6. Dropdown 2 -->
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Buffer Size</label>
+                            <select id="n_buffer" class="w-full px-3 py-1.5 neu-pressed bg-[#e0e0e0] dark:bg-[#1e1e1e] text-xs outline-none rounded-xl">
+                                <option>512 KB</option>
+                                <option>1024 KB</option>
+                            </select>
+                        </div>
+
+                        <!-- 7. Textarea (Pressed) -->
+                        <div>
+                            <label class="block text-[9px] font-bold text-slate-400 mb-1 uppercase">Sensor Commands (Textarea)</label>
+                            <textarea id="n_cmds" rows="1" class="w-full px-3 py-1.5 neu-pressed bg-[#e0e0e0] dark:bg-[#1e1e1e] text-xs outline-none rounded-xl" placeholder="Enter the configuration commands here..."></textarea>
+                        </div>
+
+                        <!-- 8. Progress Bar -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[8px] text-slate-400">
+                                <span>Data Transfer Rate (Progress)</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="w-full h-2 neu-pressed bg-[#e0e0e0] dark:bg-[#1e1e1e] rounded-full overflow-hidden p-0.5">
+                                <div class="w-[45%] h-full bg-indigo-500 rounded-full"></div>
+                            </div>
+                        </div>
+
+                        <!-- 9. List / Table Element -->
+                        <div class="neu-pressed bg-[#e0e0e0] dark:bg-[#1e1e1e] p-2 rounded-xl text-[10px] text-slate-500 max-h-16 overflow-y-auto">
+                            <div class="flex justify-between border-b border-slate-350 dark:border-neutral-800 pb-1 font-bold">
+                                <span>Active Sensor</span>
+                                <span>Status</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Core_X9</span>
+                                <span class="text-indigo-500 font-bold">Connected</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 10. Buttons -->
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <button id="n_btn_submit" class="w-full py-2 rounded-xl neu-flat bg-[#e0e0e0] dark:bg-[#1e1e1e] text-xs font-bold text-indigo-500 dark:text-indigo-400">
+                            Submit Values
+                        </button>
+                        <button id="n_btn_reset" class="w-full py-2 rounded-xl neu-flat bg-[#e0e0e0] dark:bg-[#1e1e1e] text-xs text-slate-500">
+                            Reset
+                        </button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 7,
+                name: "Fluent Design / Win11 UI",
+                desc: "Rounded corners, semi-transparent smooth acrylic texture and elegant Windows borders.",
+                app: "VB.NET / WPF / WinUI desktop applications",
+                icon: "fa-brands fa-windows",
+                classes: "acrylic-win shadow-2xl border text-left overflow-hidden rounded-xl",
+                tips: [
+                    "Always use thin, rounded (rounded-lg) borders for form elements.",
+                    "Apply a thin Windows 11 blue accent line under selected inputs and focused buttons."
+                ],
+                useCases: ["WinUI Desktop Simulators", "Windows Control Panels"],
+                html: `
+                <div class="w-full max-w-xl rounded-xl acrylic-win shadow-2xl border text-left overflow-hidden text-slate-800 dark:text-slate-100">
+                    <!-- 1. Window Title Bar / 2. Status Badge -->
+                    <div class="px-4 py-2 flex justify-between items-center border-b border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-brands fa-windows text-[#0078d4]"></i>
+                            <span class="text-xs font-semibold">Windows Update Control Panel</span>
+                        </div>
+                        <span id="fl_status" class="bg-[#e2f0fc] dark:bg-indigo-950 text-[#0078d4] text-[9px] px-2 py-0.5 rounded font-bold">Protection: Active</span>
+                    </div>
+
+                    <!-- Fluent Form Elements -->
+                    <div class="p-6 space-y-4">
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <!-- 3. Text Input -->
+                            <div>
+                                <label class="block text-[11px] text-slate-500 mb-1">Server Address (Input)</label>
+                                <input type="text" id="fl_server" value="https://update.microsoft.corp" class="w-full px-3 py-1.5 bg-white/60 dark:bg-black/40 border border-black/15 dark:border-white/15 rounded-lg text-xs outline-none focus:border-b-2 focus:border-b-[#0078d4] transition-all">
+                            </div>
+                            <!-- 4. Select -->
+                            <div>
+                                <label class="block text-[11px] text-slate-500 mb-1">Update Frequency (Select)</label>
+                                <select id="fl_freq" class="w-full px-3 py-1.5 bg-white/60 dark:bg-black/40 border border-black/15 dark:border-white/15 rounded-lg text-xs outline-none focus:border-b-2 focus:border-b-[#0078d4] transition-all">
+                                    <option>Daily at 03:00</option>
+                                    <option>Manual Check</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 5. Slider (Range) -->
+                        <div>
+                            <label class="block text-[11px] text-slate-500 mb-1">Quota Limit: <span id="fl_quotaVal">20</span> GB</label>
+                            <input type="range" id="fl_quota" class="w-full accent-[#0078d4] bg-slate-200 dark:bg-slate-800 rounded-lg h-1 cursor-pointer" min="5" max="100" value="20">
+                        </div>
+
+                        <!-- 6. Checkbox & 7. Toggle (Switch) -->
+                        <div class="bg-white/30 dark:bg-white/[0.02] p-3 rounded-xl border border-black/5 dark:border-white/5 grid grid-cols-2 gap-3 text-xs">
+                            <div>
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="checkbox" id="fl_metered" checked class="rounded accent-[#0078d4]">
+                                    <span>Metered Connections</span>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px]">Auto Restart</span>
+                                <input type="checkbox" id="fl_reboot" class="rounded accent-[#0078d4]">
+                            </div>
+                        </div>
+
+                        <!-- 8. Dropdown 2 -->
+                        <div>
+                            <label class="block text-[11px] text-slate-500 mb-1">Download Speed Limit</label>
+                            <select id="fl_speed" class="w-full px-3 py-1.5 bg-white/60 dark:bg-black/40 border border-black/15 dark:border-white/15 rounded-lg text-xs outline-none">
+                                <option>Unlimited (Maximum)</option>
+                                <option>10 Mbps (Throttled)</option>
+                            </select>
+                        </div>
+
+                        <!-- 9. Textarea -->
+                        <div>
+                            <label class="block text-[11px] text-slate-500 mb-1">Pre-Install Warning Note</label>
+                            <textarea id="fl_note" rows="1" class="w-full px-3 py-1.5 bg-white/60 dark:bg-black/40 border border-black/15 dark:border-white/15 rounded-lg text-xs outline-none" placeholder="Write the update notes..."></textarea>
+                        </div>
+
+                        <!-- 10. Progress Bar -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[9px] text-slate-400">
+                                <span>Download Progress (Progress)</span>
+                                <span>78%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="w-[78%] h-full bg-[#0078d4]"></div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Buttons -->
+                        <div class="flex justify-end gap-2 pt-1 border-t border-black/5 dark:border-white/5">
+                            <button id="fl_btn_pause" class="px-4 py-1.5 bg-slate-200/60 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/15 rounded-lg text-xs font-semibold">Advanced Settings</button>
+                            <button id="fl_btn_search" class="px-4 py-1.5 bg-[#0078d4] text-white hover:bg-[#006cc0] rounded-lg text-xs font-semibold shadow-md">Scan for Updates</button>
+                        </div>
+                    </div>
+                </div>`
+            },
+            {
+                id: 8,
+                name: "Split Panel Layout",
+                desc: "A list on the left column that changes on click, with the selected item details and a form editor on the right.",
+                app: "Marknote, rule manager, file analysis app",
+                icon: "fa-solid fa-table-columns",
+                classes: "flex rounded-xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-800",
+                tips: [
+                    "Use the left-column list only for data selection (navigation).",
+                    "Turn the right detail into a rich control panel with form inputs, radio buttons and a text editing area."
+                ],
+                useCases: ["Email Clients", "File Explorers", "Markdown Notebooks"],
+                html: `
+                <div class="w-full max-w-3xl bg-white dark:bg-slate-950 rounded-2xl shadow-xl flex border border-slate-200/80 dark:border-slate-800 h-[380px] text-left">
+                    <!-- 1. Sol Liste Paneli -->
+                    <div class="w-1/3 border-r border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20 flex flex-col shrink-0">
+                        <div class="p-3 border-b border-slate-200/80 dark:border-slate-800 flex justify-between items-center bg-white dark:bg-slate-950">
+                            <span class="text-xs font-bold text-slate-500">Notes / Rules</span>
+                            <button class="text-indigo-600 text-xs"><i class="fa-solid fa-plus-circle"></i></button>
+                        </div>
+                        <div class="flex-1 overflow-y-auto p-2 space-y-1">
+                            <div class="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-150 dark:border-indigo-900/30 cursor-pointer">
+                                <h4 class="text-xs font-bold text-indigo-700 dark:text-indigo-300 truncate">Claude_V3_Rule</h4>
+                                <span class="text-[9px] bg-red-100 text-red-600 px-1 py-0.2 rounded font-bold">Critical</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Detail and Form Editing Panel -->
+                    <div class="flex-1 p-5 flex flex-col justify-between overflow-y-auto">
+                        <div class="space-y-3">
+                            <h3 class="text-xs font-bold text-slate-400 uppercase">Edit Rule Details</h3>
+                            
+                            <!-- Form Elements -->
+                            <div class="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <!-- 2. Text Input -->
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Rule Name</label>
+                                        <input type="text" id="sp_name" class="w-full px-3 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs outline-none focus:border-indigo-500 text-slate-800 dark:text-slate-200" value="Claude_V3_Rule">
+                                    </div>
+                                    <!-- 3. Select -->
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Category</label>
+                                        <select id="sp_category" class="w-full px-3 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs outline-none focus:border-indigo-500 text-slate-800 dark:text-slate-200">
+                                            <option>System Prompt</option>
+                                            <option>Regex Filter</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <!-- 4. Slider -->
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Priority: <span id="sp_prioVal">5</span></label>
+                                        <input type="range" id="sp_prio" class="w-full accent-indigo-600 cursor-pointer h-1" min="1" max="10" value="5">
+                                    </div>
+                                    <!-- 5. Select 2 -->
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Target Model</label>
+                                        <select id="sp_model" class="w-full px-3 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs outline-none focus:border-indigo-500 text-slate-800 dark:text-slate-200">
+                                            <option>Claude-3.5-Sonnet</option>
+                                            <option>GPT-4o</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- 6. Checkbox & 7. Radio Groups -->
+                                <div class="grid grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-900 p-2 rounded-lg text-[11px]">
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="checkbox" id="sp_active" checked class="rounded accent-indigo-600">
+                                        <span>Active Rule</span>
+                                    </label>
+                                    <div class="flex flex-col gap-0.5">
+                                        <label class="flex items-center gap-1 cursor-pointer">
+                                            <input type="radio" id="sp_strict_on" name="sp_strict" checked class="accent-indigo-600">
+                                            <span>Strict Matching</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- 8. Textarea -->
+                                <div>
+                                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Instruction Content (Textarea)</label>
+                                    <textarea id="sp_prompt" rows="2" class="w-full px-3 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs outline-none focus:border-indigo-500 text-slate-800 dark:text-slate-200 font-mono">Output code blocks using Tailwind CSS classes ONLY.</textarea>
+                                </div>
+
+                                <!-- 9. Progress Bar -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between text-[9px] text-slate-400">
+                                        <span>Build Progress (Progress)</span>
+                                        <span>90%</span>
+                                    </div>
+                                    <div class="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                        <div class="w-[90%] h-full bg-indigo-600"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10. Buttons & 11. Status Badge -->
+                        <div class="flex justify-between items-center pt-3 border-t border-slate-100 dark:border-slate-900">
+                            <span id="sp_badge" class="bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-400 text-[9px] px-2 py-0.5 rounded font-bold">Critical Revision</span>
+                            <div class="flex gap-2">
+                                <button id="sp_btn_del" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg text-xs font-semibold">Delete</button>
+                                <button id="sp_btn_save" class="px-4 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-semibold hover:bg-indigo-700">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+            },
+            {
+                id: 9,
+                name: "Kanban / Board UI",
+                desc: "Staged columns evoking a drag-and-drop feel, with richly detailed task cards inside.",
+                app: "Project tracking, task management, AI agent workflow",
+                icon: "fa-solid fa-rectangle-list",
+                classes: "flex gap-4 overflow-x-auto p-4",
+                tips: [
+                    "Place a filter selector next to the board columns along with an add-new-card button."
+                ],
+                useCases: ["Software Sprint Tracking", "Sales Pipeline"],
+                html: `
+                <div class="w-full max-w-2xl bg-white dark:bg-slate-950 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 text-left space-y-4">
+                    <!-- 1. Header & 2. Select -->
+                    <div class="flex justify-between items-center border-b border-slate-150 dark:border-slate-800 pb-3">
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Board Management Module</span>
+                            <h3 class="text-sm font-bold">Agent Task Pool</h3>
+                        </div>
+                        <select id="k_sprint" class="p-1 px-2.5 bg-transparent border rounded text-[10px] text-slate-500">
+                            <option>Sprint #14 (Active)</option>
+                            <option>Sprint #13</option>
+                        </select>
+                    </div>
+
+                    <!-- Kanban Card and Column Structure With 10+ Components -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border space-y-3">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-blue-500"></span> In Progress
+                            </span>
+                            
+                            <div class="bg-white dark:bg-slate-950 p-3 rounded-lg border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm">
+                                <h5 class="text-xs font-bold text-slate-800 dark:text-white">API Integration Module</h5>
+                                
+                                <!-- 3. Text Input -->
+                                <div>
+                                    <label class="block text-[8px] text-slate-400 uppercase">Assigned Agent (Input)</label>
+                                    <input type="text" id="k_assignee" class="w-full p-1 border dark:border-slate-800 rounded text-[10px] bg-transparent" value="Ajan_Alpha_R1">
+                                </div>
+
+                                <!-- 4. Select Inside Card -->
+                                <div>
+                                    <label class="block text-[8px] text-slate-400 uppercase">Task Type</label>
+                                    <select id="k_type" class="w-full p-1 border dark:border-slate-800 rounded text-[10px] bg-transparent">
+                                        <option>AI Core</option>
+                                        <option>UI Development</option>
+                                    </select>
+                                </div>
+
+                                <!-- 5. Range Slider Inside Card -->
+                                <div>
+                                    <label class="block text-[8px] text-slate-400 uppercase">Progress Rate: <span id="k_progVal">70</span>%</label>
+                                    <input type="range" id="k_prog" class="w-full accent-blue-500 h-1 cursor-pointer" min="0" max="100" value="70">
+                                </div>
+
+                                <!-- 6. Checkbox & 7. Radio Groups -->
+                                <div class="p-2 bg-slate-50 dark:bg-slate-900 border border-slate-150 dark:border-slate-800 rounded text-[9px] space-y-1 text-slate-500">
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="checkbox" id="k_alert" checked class="rounded accent-blue-500">
+                                        <span>Send Slack notification</span>
+                                    </label>
+                                    <div class="flex gap-2 mt-1">
+                                        <label class="flex items-center gap-1 cursor-pointer">
+                                            <input type="radio" id="k_prio_high" name="k_prio" checked class="accent-blue-500">
+                                            <span>High</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- 8. Textarea Inside Card -->
+                                <div>
+                                    <label class="block text-[8px] text-slate-400 uppercase">Comments / Notes (Textarea)</label>
+                                    <textarea id="k_comment" rows="1" class="w-full p-1 border dark:border-slate-800 rounded text-[10px] bg-transparent" placeholder="Enter the bugs here..."></textarea>
+                                </div>
+
+                                <!-- 9. Progress Bar Inside Card -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between text-[8px] text-slate-400">
+                                        <span>Overall Sprint Goal</span>
+                                        <span>70%</span>
+                                    </div>
+                                    <div class="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                        <div class="w-[70%] h-full bg-blue-500"></div>
+                                    </div>
+                                </div>
+
+                                <!-- 10. Checklist Tablosu -->
+                                <div class="border rounded p-1 text-[9px] text-slate-400 max-h-12 overflow-y-auto">
+                                    <div class="flex justify-between border-b pb-0.5 mb-0.5">
+                                        <span>Subtask</span>
+                                        <span>Done</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Criteria tests</span>
+                                        <span class="text-blue-500 font-bold">Yes</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 11. Buttons & Status Badge -->
+                    <div class="flex justify-between items-center pt-3 border-t border-slate-100 dark:border-slate-800">
+                        <span id="k_badge" class="bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 text-[9px] px-2 py-0.5 rounded font-bold">Agent Active: Alpha</span>
+                        <div class="flex gap-2">
+                            <button id="k_btn_abort" class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded text-[11px] font-semibold">Cancel All</button>
+                            <button id="k_btn_add" class="px-4 py-1 bg-indigo-600 text-white rounded text-[11px] font-semibold hover:bg-indigo-700">Create Card</button>
+                        </div>
+                    </div>
+                </div>`
+            },
+            {
+                id: 10,
+                name: "Terminal + GUI Hybrid",
+                desc: "Rich control form buttons at the top, and real-time streaming console output at the bottom.",
+                app: "wmole, updater, installer, CLI wrapper apps",
+                icon: "fa-solid fa-terminal",
+                classes: "flex flex-col rounded-xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-800",
+                tips: [
+                    "Use prominent checkbox groups and sliders in the GUI form controls at the top of the interface."
+                ],
+                useCases: ["Setup Wizards", "Database Synchronizers"],
+                html: `
+                <div class="w-full max-w-xl bg-white dark:bg-slate-950 rounded-2xl shadow-xl border overflow-hidden text-left flex flex-col h-[400px]">
+                    <!-- Top GUI Controls and Form With 10+ Components -->
+                    <div class="p-4 border-b border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 space-y-3.5 shrink-0 text-xs">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-[9px] text-slate-400 font-bold block uppercase">Migration Setup</span>
+                                <h3 class="text-xs font-bold text-slate-800 dark:text-white">Data Migration & Synchronization</h3>
+                            </div>
+                            <!-- 1. Status Badge -->
+                            <span id="term_status" class="bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 text-[9px] px-2 py-0.5 rounded font-bold">Ready</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- 2. Text Input -->
+                            <div>
+                                <label class="block text-slate-400 mb-0.5 font-bold uppercase text-[9px]">Target Server IP (Input)</label>
+                                <input type="text" id="term_host" value="192.168.1.144" class="w-full p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded">
+                            </div>
+                            <!-- 3. Select 1 -->
+                            <div>
+                                <label class="block text-slate-400 mb-0.5 font-bold uppercase text-[9px]">Request Rate (Select)</label>
+                                <select id="term_rate" class="w-full p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded">
+                                    <option>250 records / second</option>
+                                    <option>1000 records / second</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- 4. Slider (Range) -->
+                            <div>
+                                <label class="block text-slate-400 mb-0.5 font-bold uppercase text-[9px]">Memory Limit: <span id="term_limitVal">60</span>%</label>
+                                <input type="range" id="term_limit" class="w-full accent-indigo-600 h-1 cursor-pointer mt-1" min="10" max="100" value="60">
+                            </div>
+                            <!-- 5. Select 2 -->
+                            <div>
+                                <label class="block text-slate-400 mb-0.5 font-bold uppercase text-[9px]">Compression Algorithm</label>
+                                <select id="term_compression" class="w-full p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded">
+                                    <option>GZip Compression</option>
+                                    <option>ZStandard (Fast)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 6. Checkbox & 7. Radio Groups -->
+                        <div class="grid grid-cols-2 gap-3 bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-800 text-[10px]">
+                            <label class="flex items-center gap-1.5 cursor-pointer text-slate-500">
+                                <input type="checkbox" id="term_verbose" checked class="rounded accent-indigo-600">
+                                <span>Verbose Logging</span>
+                            </label>
+                            <div class="flex gap-2">
+                                <label class="flex items-center gap-1 cursor-pointer text-slate-500">
+                                    <input type="radio" id="term_mode_db" name="term_mode" checked class="accent-indigo-600">
+                                    <span>SQL Mode</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 8. Text Area (Textarea) -->
+                        <div>
+                            <label class="block text-slate-400 mb-0.5 font-bold uppercase text-[9px]">Pre-setup SQL Command</label>
+                            <textarea id="term_sql" rows="1" class="w-full p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded text-[10px] font-mono">TRUNCATE TABLE staging_logs;</textarea>
+                        </div>
+
+                        <!-- 9. Progress Bar -->
+                        <div class="space-y-0.5">
+                            <div class="flex justify-between text-[8px] text-slate-400">
+                                <span>Migration Status (Progress)</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="w-[45%] h-full bg-emerald-500"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Terminal Logs (10. Terminal List / Table) -->
+                    <div class="flex-1 bg-black p-4 font-mono text-[10px] text-green-400 overflow-y-auto space-y-1">
+                        <p class="text-slate-500">[2026-06-04 10:27:01] Connection successful: 192.168.1.144:3306</p>
+                        <p class="text-emerald-500">[2026-06-04 10:27:02] [OK] Migration schema created.</p>
+                        <p class="text-amber-500">[2026-06-04 10:27:03] [WARN] 'legacy_logs' table is empty, skipping.</p>
+                        <p class="text-cyan-400 animate-pulse">[2026-06-04 10:27:04] [INFO] Transferring: 45% complete...</p>
+                    </div>
+
+                    <!-- 11. Buttons -->
+                    <div class="p-2 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 flex justify-end gap-2 shrink-0">
+                        <button id="term_btn_stop" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded text-[10px]">Stop</button>
+                        <button id="term_btn_start" class="px-4 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded text-[10px]">Start Synchronization</button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 11,
+                name: "Floating Tool Window",
+                desc: "Always-on-top mini panels with rich form controls that can dock to screen corners.",
+                app: "OCR capture, clipboard manager, quick launcher",
+                icon: "fa-regular fa-clone",
+                classes: "shadow-2xl rounded-2xl border bg-white dark:bg-slate-900 p-4 w-52",
+                tips: [
+                    "Use micro-scale inputs to create maximum form richness in a very limited space."
+                ],
+                useCases: ["Screenshot Tools", "Clipboard Managers"],
+                html: `
+                <div class="w-60 bg-white dark:bg-slate-900 rounded-[var(--custom-radius)] shadow-2xl border border-indigo-200/80 dark:border-indigo-950 p-4 text-left relative" style="padding: var(--custom-padding);">
+                    <!-- 1. Drag Bar & 2. Status Badge -->
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="w-12 h-1 bg-slate-300 dark:bg-slate-700 rounded-full cursor-grab"></span>
+                        <span id="flt_status" class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 text-[8px] px-1.5 py-0.2 rounded font-bold">MICRO</span>
+                    </div>
+
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">OCR Capture Configuration</span>
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    </div>
+
+                    <!-- Mini Form Containing 10+ Different Elements -->
+                    <div class="space-y-2.5 text-[10px] text-slate-600 dark:text-slate-300">
+                        <!-- 3. Text Input -->
+                        <div>
+                            <label class="block text-slate-400 mb-0.5 uppercase text-[8px]">Profile Name (Input)</label>
+                            <input type="text" id="flt_profile" class="w-full p-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded text-[9px]" value="Default_Scan">
+                        </div>
+
+                        <!-- 4. Select -->
+                        <div>
+                            <label class="block text-slate-400 mb-0.5 uppercase text-[8px]">Target Translation Language (Select)</label>
+                            <select id="flt_lang" class="w-full p-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded text-[9px]">
+                                <option>Turkish (TR)</option>
+                                <option>English (EN)</option>
+                            </select>
+                        </div>
+
+                        <!-- 5. Range Slider -->
+                        <div>
+                            <label class="block text-slate-400 mb-0.5 uppercase text-[8px]">Image Resolution: <span id="flt_resVal">300</span> DPI</label>
+                            <input type="range" id="flt_res" class="w-full accent-indigo-500 h-1 cursor-pointer" min="150" max="600" value="300">
+                        </div>
+
+                        <!-- 6. Select 2 -->
+                        <div>
+                            <label class="block text-slate-400 mb-0.5 uppercase text-[8px]">Text Format</label>
+                            <select id="flt_format" class="w-full p-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded text-[9px]">
+                                <option>Raw Text</option>
+                                <option>Table Parsing</option>
+                            </select>
+                        </div>
+
+                        <!-- 7. Checkbox & 8. Radio Groups -->
+                        <div class="space-y-1 bg-slate-50 dark:bg-slate-950 p-2 border border-slate-100 dark:border-slate-800 rounded text-[9px]">
+                            <label class="flex items-center gap-1 cursor-pointer">
+                                <input type="checkbox" id="flt_auto" checked class="rounded accent-indigo-600">
+                                <span>Auto Copy to Clipboard</span>
+                            </label>
+                            <div class="flex gap-2">
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" id="flt_engine_tess" name="flt_engine" checked class="accent-indigo-600">
+                                    <span>Tesseract</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 9. Textarea -->
+                        <div>
+                            <label class="block text-slate-400 mb-0.5 uppercase text-[8px]">Misread Character Replacement List</label>
+                            <textarea id="flt_replacements" rows="1" class="w-full p-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded text-[9px] font-mono">{"0": "O", "1": "l"}</textarea>
+                        </div>
+
+                        <!-- 10. Progress Bar -->
+                        <div class="space-y-0.5">
+                            <div class="flex justify-between text-[8px] text-slate-400">
+                                <span>Agent Memory Share</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="w-[25%] h-full bg-indigo-600"></div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Recent Actions List -->
+                        <div class="border rounded p-1 text-[8px] text-slate-400 max-h-12 overflow-y-auto">
+                            <div class="flex justify-between border-b pb-0.5 mb-0.5 font-bold">
+                                <span>Screen Capture</span>
+                                <span>Status</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>screenshot_01.png</span>
+                                <span class="text-emerald-500">Read</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 12. Buttons -->
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-1">
+                        <button id="flt_btn_hide" class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded text-[9px] font-semibold">Hide</button>
+                        <button id="flt_btn_capture" class="px-3 py-1 bg-indigo-600 text-white rounded text-[9px] font-bold">Capture Screen</button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 12,
+                name: "Workspace UI",
+                desc: "Complex work environments with a multi-tab file structure and settings control panels.",
+                app: "App that manages Claude/Codex/OpenCode rules",
+                icon: "fa-solid fa-briefcase",
+                classes: "flex rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950",
+                tips: [
+                    "Place both the file navigation and the parameter form of the currently open file side by side in the workspace."
+                ],
+                useCases: ["Project Management Panels", "Code Editors"],
+                html: `
+                <div class="w-full max-w-3xl bg-white dark:bg-slate-950 rounded-[var(--custom-radius)] shadow-xl flex border border-slate-200/80 dark:border-slate-800 h-[380px] text-left overflow-hidden">
+                    <!-- 1. Left Workspace Folder Tree -->
+                    <div class="w-44 border-r border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/20 p-3 flex flex-col justify-between shrink-0">
+                        <div class="space-y-3">
+                            <div class="bg-white dark:bg-slate-900 p-1.5 rounded border border-slate-200/60 dark:border-slate-800 text-[10px] font-bold">
+                                workspace_config_v3
+                            </div>
+                            <div class="space-y-1">
+                                <span class="text-[8px] text-slate-400 font-bold block uppercase">File List</span>
+                                <p class="text-[10px] py-1 px-1.5 rounded bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 cursor-pointer"><i class="fa-solid fa-file-code"></i> agent_prompts.md</p>
+                            </div>
+                        </div>
+                        <!-- 2. Status Badge -->
+                        <span id="ws_branch_badge" class="text-[9px] text-slate-400"><i class="fa-solid fa-code-branch"></i> branch: release-2.5</span>
+                    </div>
+
+                    <!-- Right Editor and Parameter Editing Form (10+ Elements) -->
+                    <div class="flex-1 flex flex-col bg-slate-50/20 dark:bg-slate-900/10">
+                        <div class="flex bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 text-[10px] font-bold shrink-0">
+                            <div class="px-3 py-1.5 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 text-indigo-600 dark:text-indigo-400">
+                                agent_prompts.md
+                            </div>
+                        </div>
+
+                        <!-- Rich Settings and Form Editor -->
+                        <div class="p-4 space-y-3 flex-1 overflow-y-auto text-xs" style="padding: var(--custom-padding);">
+                            <div class="grid grid-cols-2 gap-3">
+                                <!-- 3. Text Input -->
+                                <div>
+                                    <label class="block text-slate-400 mb-1">Agent Model Name (Input)</label>
+                                    <input type="text" id="ws_agent_name" class="w-full p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded text-[11px]" value="Ajan_Vertex_R1">
+                                </div>
+                                <!-- 4. Select -->
+                                <div>
+                                    <label class="block text-slate-400 mb-1">Optimization Target (Select)</label>
+                                    <select id="ws_opt" class="w-full p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded text-[11px]">
+                                        <option>Maximum Speed</option>
+                                        <option>Low Token Usage</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <!-- 5. Range Slider -->
+                                <div>
+                                    <label class="block text-slate-400 mb-1">Maximum Tokens: <span id="ws_tokensVal">4000</span></label>
+                                    <input type="range" id="ws_tokens" class="w-full accent-indigo-600 h-1 cursor-pointer mt-1" min="1000" max="8000" value="4000">
+                                </div>
+                                <!-- 6. Select 2 -->
+                                <div>
+                                    <label class="block text-slate-400 mb-1">Format Type</label>
+                                    <select id="ws_format" class="w-full p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded text-[11px]">
+                                        <option>JSON Object</option>
+                                        <option>Plain Text (Markdown)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- 7. Checkbox & 8. Radio Groups -->
+                            <div class="grid grid-cols-2 gap-3 bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-800 text-[10px]">
+                                <label class="flex items-center gap-1.5 cursor-pointer text-slate-500">
+                                    <input type="checkbox" id="ws_autosave" checked class="rounded accent-indigo-600">
+                                    <span>Auto Save File</span>
+                                </label>
+                                <div class="flex gap-2">
+                                    <label class="flex items-center gap-1 cursor-pointer text-slate-500">
+                                        <input type="radio" id="ws_mode_live" name="ws_mode" checked class="accent-indigo-600">
+                                        <span>Live</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 9. Textarea -->
+                            <div>
+                                <label class="block text-slate-400 mb-1">Agent Instruction Text (Textarea)</label>
+                                <textarea id="ws_prompt" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded text-[10px] font-mono" rows="2">## System Instruction
+Generate code utilizing Tailwind CSS.</textarea>
+                            </div>
+
+                            <!-- 10. Progress Bar -->
+                            <div class="space-y-0.5">
+                                <div class="flex justify-between text-[8px] text-slate-400">
+                                    <span>Build Level (Progress)</span>
+                                    <span>55%</span>
+                                </div>
+                                <div class="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="w-[55%] h-full bg-indigo-600"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Buttons -->
+                        <div class="p-2 border-t border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 flex justify-end gap-2 shrink-0">
+                            <button id="ws_btn_discard" class="px-3 py-1 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded text-[10px]">Clear</button>
+                            <button id="ws_btn_commit" class="px-4 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded text-[10px]">Commit Project</button>
+                        </div>
+                    </div>
+                </div>`
+            },
+            {
+                id: 13,
+                name: "Settings-First UI",
+                desc: "Control panels focused on settings, API keys, sensitive masked inputs and model temperatures.",
+                app: "OpenRouter/DeepSeek/NVIDIA API manager",
+                icon: "fa-solid fa-sliders",
+                classes: "bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800",
+                tips: [
+                    "Design masked password boxes with an eye icon next to the form fields.",
+                    "Group numeric value inputs and radio-button billing options into clean sections."
+                ],
+                useCases: ["API Key Panels", "SaaS Integration Screens"],
+                html: `
+                <div class="w-full max-w-xl bg-white dark:bg-slate-900 rounded-[var(--custom-radius)] shadow-xl border border-slate-200/80 dark:border-slate-800 p-6 text-left space-y-4" style="padding: var(--custom-padding);">
+                    <!-- 1. Header & 2. Status Badge -->
+                    <div class="border-b border-slate-150 dark:border-slate-800 pb-2.5 flex justify-between items-center">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-800 dark:text-white">API Gateway Settings Form</h3>
+                            <p class="text-[10px] text-slate-400">Configure third-party API integrations.</p>
+                        </div>
+                        <span id="set_status" class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 text-[9px] px-2 py-0.5 rounded font-bold">API STATUS: ONLINE</span>
+                    </div>
+
+                    <!-- Form Elements Containing 10+ Different Elements -->
+                    <div class="space-y-3.5 text-xs text-slate-700 dark:text-slate-300">
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- 3. Text Input -->
+                            <div>
+                                <label class="block font-bold mb-1">API Server IP (Input)</label>
+                                <input type="text" id="set_ip" value="192.168.1.1" class="w-full p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none">
+                            </div>
+                            <!-- 4. Select -->
+                            <div>
+                                <label class="block font-bold mb-1">API Provider Type (Select)</label>
+                                <select id="set_provider" class="w-full p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none">
+                                    <option>DeepSeek Inc (China)</option>
+                                    <option>OpenRouter API Hub</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 5. Maskeli Girdi (Input Password) -->
+                        <div>
+                            <label class="block font-bold mb-1">Secret Integration Key (API_KEY)</label>
+                            <div class="relative flex items-center">
+                                <input type="password" id="set_key" value="sk-deepseek-7712398491823908a" class="w-full p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none font-mono pr-10">
+                                <button class="absolute right-3 text-slate-400"><i class="fa-solid fa-eye-slash text-xs"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <!-- 6. Range Slider -->
+                            <div>
+                                <label class="block font-bold mb-1">Daily Quota Limit (Slider): <span id="set_quotaVal">50</span>$</label>
+                                <input type="range" id="set_quota" class="w-full accent-indigo-600 h-1 cursor-pointer mt-1" min="10" max="200" value="50">
+                            </div>
+                            <!-- 7. Select 2 -->
+                            <div>
+                                <label class="block font-bold mb-1">Timeout Duration</label>
+                                <select id="set_timeout" class="w-full p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none">
+                                    <option>30 seconds (Recommended)</option>
+                                    <option>10 seconds (Fast)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 8. Checkbox & 9. Radio Groups -->
+                        <div class="grid grid-cols-2 gap-3 bg-slate-50 dark:bg-slate-950 p-2.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <label class="flex items-center gap-1.5 cursor-pointer text-[11px]">
+                                <input type="checkbox" id="set_ssl" checked class="rounded accent-indigo-600">
+                                <span>Enforce SSL Security</span>
+                            </label>
+                            <div class="flex gap-2">
+                                <label class="flex items-center gap-1 cursor-pointer text-[11px]">
+                                    <input type="radio" id="set_billing_pay" name="set_billing" checked class="accent-indigo-600">
+                                    <span>Pay As You Go</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 10. Text Area (Textarea) -->
+                        <div>
+                            <label class="block font-bold mb-1">Connection ID Custom Note (Textarea)</label>
+                            <textarea id="set_notes" rows="1" class="w-full p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl outline-none" placeholder="Enter the connection notes..."></textarea>
+                        </div>
+
+                        <!-- 11. Progress Bar -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[9px] text-slate-400">
+                                <span>Daily Spent Quota Status</span>
+                                <span>15%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="w-[15%] h-full bg-indigo-600"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 12. Buttons -->
+                    <div class="flex justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800 shrink-0">
+                        <button id="set_btn_test" class="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold rounded-xl text-xs">Test Connection</button>
+                        <button id="set_btn_save" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs">Save Settings</button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 14,
+                name: "Data Table Admin UI",
+                desc: "Filterable data tables, search fields, status badges and multi-row selection forms.",
+                app: "Repo cleaner, file analysis, subscription list",
+                icon: "fa-solid fa-table",
+                classes: "bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden",
+                tips: [
+                    "Place advanced filtering and multi-row delete/edit buttons at the top of the table.",
+                    "Put bulk-action checkboxes on the left of every table row."
+                ],
+                useCases: ["Database Tables", "User Lists"],
+                html: `
+                <div class="w-full max-w-2xl bg-white dark:bg-slate-900 rounded-[var(--custom-radius)] shadow-xl border border-slate-200/80 dark:border-slate-800 overflow-hidden text-left" style="padding: var(--custom-padding);">
+                    <!-- 1. Header, 2. Text Input & 3. Select -->
+                    <div class="p-4 border-b border-slate-150 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20 flex flex-col md:flex-row gap-3 justify-between items-center text-xs">
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="dt_search" placeholder="Search the table..." class="px-3 py-1.5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg outline-none w-44">
+                            <select id="dt_filter" class="px-2 py-1.5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-500">
+                                <option>Cleanup Candidates Only</option>
+                                <option>Show All</option>
+                            </select>
+                        </div>
+                        <span id="dt_rows_badge" class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 text-[9px] px-2 py-0.5 rounded font-bold">3 Records Listed</span>
+                    </div>
+
+                    <!-- Form & Table Structure With 10+ Different Elements -->
+                    <div class="p-4 space-y-4">
+                        <div class="grid grid-cols-2 gap-3 text-xs text-slate-600 dark:text-slate-300">
+                            <!-- 4. Range Slider -->
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase">Size Limit: <span id="dt_sizeVal">100</span> MB</label>
+                                <input type="range" id="dt_size" class="w-full accent-indigo-600 h-1 cursor-pointer mt-1" min="10" max="500" value="100">
+                            </div>
+                            <!-- 5. Select 2 -->
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase">Preservation Mode</label>
+                                <select id="dt_preserve" class="w-full p-1.5 border dark:border-slate-800 rounded bg-transparent">
+                                    <option>Permanently Delete Files</option>
+                                    <option>Move to Archive (.zip)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 6. Checkbox & 7. Radio Groups -->
+                        <div class="grid grid-cols-2 gap-3 text-xs bg-slate-50 dark:bg-slate-950 p-2 rounded-lg">
+                            <label class="flex items-center gap-1.5 cursor-pointer">
+                                <input type="checkbox" id="dt_deep" checked class="rounded accent-indigo-600">
+                                <span>Perform Deep Scan</span>
+                            </label>
+                            <div class="flex gap-2">
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" id="dt_excl_yes" name="dt_excl" checked class="accent-indigo-600">
+                                    <span>Keep Exceptions</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 8. Textarea -->
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">File Extensions to Ignore</label>
+                            <textarea id="dt_exclude_ext" rows="1" class="w-full p-2 border dark:border-slate-800 rounded bg-transparent text-xs" placeholder="e.g. .env, .example, .config"></textarea>
+                        </div>
+
+                        <!-- 9. Progress Bar -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[9px] text-slate-400">
+                                <span>Drive Usage Ratio (Progress)</span>
+                                <span>78%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="w-[78%] h-full bg-indigo-600"></div>
+                            </div>
+                        </div>
+
+                        <!-- 10. Advanced Form Table -->
+                        <table class="w-full text-xs">
+                            <thead>
+                                <tr class="bg-slate-100/50 dark:bg-slate-950/40 border-b text-[10px] uppercase text-slate-400 font-bold">
+                                    <th class="p-3 w-10 text-center"><input type="checkbox" checked class="rounded accent-indigo-600"></th>
+                                    <th class="p-3 text-left">File & Folder</th>
+                                    <th class="p-3 text-left">File Size</th>
+                                    <th class="p-3 text-left">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/20">
+                                    <td class="p-3 text-center"><input type="checkbox" checked class="rounded accent-indigo-600"></td>
+                                    <td class="p-3 font-semibold">/node_modules/.cache_logs/</td>
+                                    <td class="p-3 text-slate-500 font-mono">421.2 MB</td>
+                                    <td class="p-3"><span class="bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-400 px-2 py-0.5 rounded text-[9px] font-bold">DELETABLE</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 11. Buttons -->
+                    <div class="p-3 bg-slate-50 dark:bg-slate-950/40 border-t flex justify-end gap-2 shrink-0">
+                        <button id="dt_btn_delete" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-[10px]">Delete Selected</button>
+                        <button id="dt_btn_scan" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-[10px]">Rescan Folders</button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 15,
+                name: "AI Chat + Tool Panel UI",
+                desc: "Interactive smart AI chat on the left, and rich export form fields on the right.",
+                app: "AI-powered smart_slide, cheatsheet generator",
+                icon: "fa-regular fa-comments",
+                classes: "flex rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 h-[380px]",
+                tips: [
+                    "Place a rich chat box and input bar in the left chat panel.",
+                    "Turn the right panel into a parameter-tuning panel where the user can customize the generated slide or cheatsheet."
+                ],
+                useCases: ["AI Coding Assistants", "Smart Slide Generators"],
+                html: `
+                <div class="w-full max-w-3xl bg-white dark:bg-slate-950 rounded-[var(--custom-radius)] shadow-xl flex border border-slate-200/80 dark:border-slate-800 h-[380px] text-left overflow-hidden" style="border-radius: var(--custom-radius);">
+                    <!-- Left Chat Area (AI Chat) -->
+                    <div class="w-1/2 border-r border-slate-200/80 dark:border-slate-800 flex flex-col justify-between bg-slate-50/20">
+                        <!-- 1. Header & 2. Status Badge -->
+                        <div class="p-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 flex justify-between items-center">
+                            <span class="text-[10px] font-bold">Smart Slide Assistant</span>
+                            <span id="ai_badge" class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 text-[8px] px-1.5 py-0.2 rounded font-bold">GEN_ONLINE</span>
+                        </div>
+                        
+                        <!-- Chat Stream -->
+                        <div class="flex-1 overflow-y-auto p-3 space-y-3 text-[10px]">
+                            <div class="bg-slate-100 dark:bg-slate-900 p-2 rounded-xl rounded-tl-none">
+                                <p class="text-indigo-600 dark:text-indigo-400 font-bold mb-0.5">AI Assistant</p>
+                                <p>I prepared the slide template! You can configure the settings in the right panel and download it.</p>
+                            </div>
+                        </div>
+
+                        <!-- 3. Message Input -->
+                        <div class="p-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-2 bg-white dark:bg-slate-950">
+                            <input type="text" id="ai_message" placeholder="Add more info to the slide..." class="w-full px-2.5 py-1.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[10px] outline-none">
+                            <button id="ai_btn_send" class="bg-indigo-600 text-white p-1.5 rounded-lg text-xs shrink-0"><i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Export & Theme Editor Form (10+ Elements) -->
+                    <div class="flex-1 p-5 bg-slate-50 dark:bg-slate-950 flex flex-col justify-between overflow-y-auto" style="padding: var(--custom-padding);">
+                        <div class="space-y-3.5">
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Publishing and Download Settings</span>
+                            
+                            <div class="space-y-2.5 text-[10px] text-slate-700 dark:text-slate-300">
+                                <!-- 4. Select -->
+                                <div>
+                                    <label class="block font-bold mb-1">Slide Theme</label>
+                                    <select id="ai_theme" class="w-full p-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
+                                        <option>Modern Indigo Gradient</option>
+                                        <option>Cyberpunk Neon Red</option>
+                                    </select>
+                                </div>
+
+                                <!-- 5. Range Slider -->
+                                <div>
+                                    <label class="block font-bold mb-1">Maximum Slide Count: <span id="ai_slides_countVal">5</span></label>
+                                    <input type="range" id="ai_slides_count" class="w-full accent-indigo-600 h-1 cursor-pointer mt-1" min="1" max="15" value="5">
+                                </div>
+
+                                <!-- 6. Select 2 -->
+                                <div>
+                                    <label class="block font-bold mb-1">Font Size</label>
+                                    <select id="ai_font_size" class="w-full p-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
+                                        <option>Medium (14px)</option>
+                                        <option>Large (18px)</option>
+                                    </select>
+                                </div>
+
+                                <!-- 7. Checkbox & 8. Radio Groups -->
+                                <div class="space-y-1 bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-800 text-[9px]">
+                                    <label class="flex items-center gap-1.5 cursor-pointer">
+                                        <input type="checkbox" id="ai_transition" checked class="rounded accent-indigo-600">
+                                        <span>Transition Effects Enabled</span>
+                                    </label>
+                                    <div class="flex gap-2">
+                                        <label class="flex items-center gap-1 cursor-pointer">
+                                            <input type="radio" id="ai_format_pdf" name="ai_format" checked class="accent-indigo-600">
+                                            <span>PDF Document</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- 9. Textarea -->
+                                <div>
+                                    <label class="block font-bold mb-1">Custom Footer (Footer Text)</label>
+                                    <textarea id="ai_footer" rows="1" class="w-full p-1.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-[9px]" placeholder="Write the slide footer..."></textarea>
+                                </div>
+
+                                <!-- 10. Progress Bar -->
+                                <div class="space-y-0.5">
+                                    <div class="flex justify-between text-[8px] text-slate-400">
+                                        <span>Generation Status (Progress)</span>
+                                        <span>100%</span>
+                                    </div>
+                                    <div class="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                                        <div class="w-[100%] h-full bg-indigo-600"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Buttons -->
+                        <button id="ai_btn_download" class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold rounded-lg shadow-md transition-all shrink-0">
+                            <i class="fa-solid fa-download mr-1"></i> Download File
+                        </button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 16,
+                name: "Classic Windows Form",
+                desc: "Retro windowed desktop aesthetic of the '90s and early 2000s, with gray-toned 3D frames and crisp pixel-detailed controls.",
+                app: "VB.NET / C# Legacy, system tools, desktop database panels",
+                icon: "fa-solid fa-window-restore",
+                classes: "bg-[#d4d0c8] text-black border-2 border-t-white border-l-white border-r-[#808080] border-b-[#808080] font-sans",
+                tips: [
+                    "Design frames with sharp dark-gray and white lines (3D outset) instead of flat modern shadows.",
+                    "Make input boxes inset (win98-inset), and buttons and windows outset (win98-outset)."
+                ],
+                useCases: ["WinForms Simulator", "Nostalgic System Tools"],
+                html: `
+                <div class="w-full max-w-lg p-1 win98-window win98-outset text-black font-sans text-xs select-none text-left">
+                    <!-- 1. Blue Title Bar / 2. Status Badge -->
+                    <div class="bg-gradient-to-r from-[#000080] to-[#1084d0] px-2 py-1 flex justify-between items-center text-white font-bold">
+                        <div class="flex items-center gap-1.5 text-[11px]">
+                            <i class="fa-solid fa-window-restore text-[10px]"></i>
+                            <span>Database Setup Wizard v2.1</span>
+                        </div>
+                        <span id="win_db_badge" class="bg-[#c0c0c0] text-black text-[9px] px-1.5 py-0.2 border border-t-white border-l-white border-r-[#808080] border-b-[#808080] font-bold">DB: OFFLINE</span>
+                    </div>
+
+                    <!-- Main Workspace -->
+                    <div class="p-4 bg-[#d4d0c8] space-y-3 text-black">
+                        <!-- GroupBox: Classic Retro Group Frame -->
+                        <div class="relative border border-t-white border-l-white border-r-[#808080] border-b-[#808080] p-4 pt-5">
+                            <span class="absolute -top-2.5 left-3 bg-[#d4d0c8] px-1 font-bold text-[11px]">SQL Server Connection Parameters</span>
+                            
+                            <div class="space-y-2.5 text-[11px]">
+                                <!-- 3. Text Input (Inset) -->
+                                <div class="grid grid-cols-3 items-center gap-2">
+                                    <label class="text-right font-medium">Server IP:</label>
+                                    <input type="text" id="win_ip" value="127.0.0.1" class="col-span-2 win98-inset px-2 py-0.5 outline-none font-mono">
+                                </div>
+                                <!-- 4. Select (Inset) -->
+                                <div class="grid grid-cols-3 items-center gap-2">
+                                    <label class="text-right font-medium">Authentication:</label>
+                                    <select id="win_auth" class="col-span-2 win98-inset px-1 py-0.5 outline-none">
+                                        <option>SQL Server Authentication</option>
+                                        <option>Windows Integrated Auth</option>
+                                    </select>
+                                </div>
+                                <!-- 5. Range Slider -->
+                                <div class="grid grid-cols-3 items-center gap-2">
+                                    <label class="text-right font-medium">Pool Size: <span id="win_poolVal">100</span></label>
+                                    <input type="range" id="win_pool" class="col-span-2 cursor-pointer h-1 bg-[#808080]" min="10" max="200" value="100">
+                                </div>
+                                <!-- 6. Select 2 (Inset) -->
+                                <div class="grid grid-cols-3 items-center gap-2">
+                                    <label class="text-right font-medium">Protocol:</label>
+                                    <select id="win_protocol" class="col-span-2 win98-inset px-1 py-0.5 outline-none">
+                                        <option>TCP/IP (Default)</option>
+                                        <option>Named Pipes</option>
+                                    </select>
+                                </div>
+                                <!-- 7. Checkbox & 8. Radio Groups -->
+                                <div class="grid grid-cols-3 items-start gap-2">
+                                    <label class="text-right font-medium">Options:</label>
+                                    <div class="col-span-2 flex flex-col gap-1">
+                                        <label class="flex items-center gap-1.5 cursor-pointer">
+                                            <input type="checkbox" id="win_ssl" checked class="accent-black">
+                                            <span>SSL Certificate Required</span>
+                                        </label>
+                                        <label class="flex items-center gap-1.5 cursor-pointer">
+                                            <input type="radio" id="win_pooling_on" name="win_pooling" checked class="accent-black">
+                                            <span>Connection Pooling</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9. Text Area (Textarea) -->
+                        <div>
+                            <label class="block font-bold text-[10px] mb-1">Connection Startup Script (Textarea)</label>
+                            <textarea id="win_script" rows="1" class="w-full win98-inset p-1 outline-none font-mono text-[10px]">SET NOCOUNT ON;</textarea>
+                        </div>
+
+                        <!-- 10. Progress Bar (Retro Pixel Style) -->
+                        <div class="flex items-center justify-between text-[11px]">
+                            <span class="font-bold">Connection Setup Status:</span>
+                            <div class="w-48 h-5 win98-inset p-0.5 flex gap-0.5 overflow-hidden bg-white shrink-0">
+                                <div class="w-4 h-full bg-[#000080]"></div>
+                                <div class="w-4 h-full bg-[#000080]"></div>
+                                <div class="w-4 h-full bg-[#000080]"></div>
+                                <div class="w-4 h-full bg-[#000080]"></div>
+                                <div class="w-4 h-full bg-[#000080]"></div>
+                                <span class="text-[10px] text-black font-bold pl-2 self-center">%50</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 11. Buttons (Outset Butonlar) -->
+                    <div class="bg-[#d4d0c8] px-4 py-2 flex justify-end gap-2 border-t border-[#808080] shrink-0">
+                        <button id="win_btn_conn" class="win98-button win98-outset px-4 py-1 font-bold min-w-[80px] hover:bg-[#e6e6e6]">Connect</button>
+                        <button id="win_btn_cancel" class="win98-button win98-outset px-4 py-1 min-w-[80px] hover:bg-[#e6e6e6]">Cancel</button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 17,
+                name: "Cyberpunk HUD UI",
+                desc: "Futuristic sharp lines, glitch looks, data density and sharp-angled neon form elements.",
+                app: "Sci-Fi control screens, game management consoles, AI autonomous agent panels",
+                icon: "fa-solid fa-user-astronaut",
+                classes: "bg-black text-cyan-400 border-2 border-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.3)] font-mono",
+                tips: [
+                    "Build frames entirely from sharp corners and clip only a single corner at a 45-degree angle (clip-path).",
+                    "Apply glitch animations and glowing neon shadows to button backgrounds."
+                ],
+                useCases: ["Agent Control Room", "Cybersecurity Scanners", "HUD Displays"],
+                html: `
+                <div class="w-full max-w-xl p-6 bg-black border-2 border-cyan-500 rounded-none shadow-[0_0_20px_rgba(6,182,212,0.3)] text-cyan-400 font-mono text-xs text-left">
+                    <!-- 1. Header & 2. Status Badge -->
+                    <div class="flex justify-between items-center border-b border-cyan-800 pb-2 mb-4">
+                        <span class="tracking-widest font-black text-sm">NEO_MATRIX v4.2</span>
+                        <span id="cy_status" class="text-rose-500 animate-pulse font-bold">▲ CAUTION: OVERHEAT</span>
+                    </div>
+
+                    <!-- Neon Form Containing 10+ Different Elements -->
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- 3. Text Input -->
+                            <div>
+                                <span class="block text-[9px] text-cyan-600 font-bold mb-1 uppercase">Target Sector (Input)</span>
+                                <input type="text" id="cy_target" class="w-full bg-black border border-cyan-800 focus:border-cyan-400 px-3 py-1.5 text-xs text-cyan-300 outline-none" value="SECTOR_Z_09">
+                            </div>
+                            <!-- 4. Select -->
+                            <div>
+                                <span class="block text-[9px] text-cyan-600 font-bold mb-1 uppercase">Power Distributor (Select)</span>
+                                <select id="cy_grid" class="w-full bg-black border border-cyan-800 focus:border-cyan-400 px-3 py-1.5 text-xs text-cyan-300 outline-none">
+                                    <option>Main Reactor #1</option>
+                                    <option>Backup Generator</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 5. Range Slider -->
+                        <div>
+                            <span class="block text-[9px] text-cyan-600 font-bold mb-1 uppercase">Laser Intensity (Slider): <span id="cy_laserVal">75</span>%</span>
+                            <input type="range" id="cy_laser" class="w-full accent-cyan-400 bg-neutral-900 cursor-pointer h-1" min="10" max="100" value="75">
+                        </div>
+
+                        <!-- 6. Select 2 -->
+                        <div>
+                            <span class="block text-[9px] text-cyan-600 font-bold mb-1 uppercase">Cyber Defense Shield</span>
+                            <select id="cy_shield" class="w-full bg-black border border-cyan-800 focus:border-cyan-400 px-3 py-1.5 text-xs text-cyan-300 outline-none">
+                                <option>Electromagnetic Barrier</option>
+                                <option>Quantum Encryption</option>
+                            </select>
+                        </div>
+
+                        <!-- 7. Checkbox & 8. Radio Groups -->
+                        <div class="grid grid-cols-2 gap-3 bg-neutral-950 p-2.5 border border-cyan-900 text-[10px]">
+                            <label class="flex items-center gap-1.5 cursor-pointer text-cyan-500">
+                                <input type="checkbox" id="cy_overclock" checked class="accent-cyan-400">
+                                <span>Core Overclock Active</span>
+                            </label>
+                            <div class="flex gap-2">
+                                <label class="flex items-center gap-1 cursor-pointer text-cyan-500">
+                                    <input type="radio" id="cy_mode_atk" name="cy_mode" checked class="accent-cyan-400">
+                                    <span>Assault Protocol</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 9. Textarea -->
+                        <div>
+                            <span class="block text-[9px] text-cyan-600 font-bold mb-1 uppercase">Manual Terminal Command Set (Textarea)</span>
+                            <textarea id="cy_commands" rows="2" class="w-full bg-black border border-cyan-800 focus:border-cyan-400 p-2 text-xs text-cyan-300 outline-none font-mono">INITIATE DECRYPTION_PROTOCOL --NODE=7</textarea>
+                        </div>
+
+                        <!-- 10. Progress Bar -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[8px] text-cyan-600">
+                                <span>Security Breach Level (Progress)</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="w-full h-1 bg-neutral-900 overflow-hidden">
+                                <div class="w-[82%] h-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Siber Grid Log Listesi -->
+                        <div class="border border-cyan-900 p-2 text-[9px] space-y-1 max-h-12 overflow-y-auto">
+                            <div class="flex justify-between border-b border-cyan-950 pb-0.5">
+                                <span>NODE</span>
+                                <span>TRANSFER</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>#NODE_778</span>
+                                <span class="text-rose-500 font-bold">Critical Breach</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 12. Buttons -->
+                    <div class="flex gap-2 justify-end pt-3 border-t border-cyan-900 mt-3">
+                        <button id="cy_btn_abort" class="px-3 py-1.5 border border-cyan-800 text-cyan-600 hover:text-white rounded-none">ABORT</button>
+                        <button id="cy_btn_init" class="px-4 py-1.5 bg-cyan-500 text-black font-bold rounded-none shadow-md">HACK SYSTEM</button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 18,
+                name: "Neo-Brutalism UI",
+                desc: "Thick black borders, un-softened flat corners, saturated pastel backgrounds and harsh retro windows.",
+                app: "Trendy SaaS tools, rule management templates, innovative web libraries",
+                icon: "fa-solid fa-shapes",
+                classes: "bg-amber-100 text-black border-[3px] border-black shadow-[4px_4px_0px_0px_#000] rounded-none font-bold",
+                tips: [
+                    "Use fully saturated pastel colors (Yellow, Pink, Orange) for accents.",
+                    "Design all shadows as hard, flat black offsets with no blur effect."
+                ],
+                useCases: ["Modern SaaS Panels", "Task Boards", "Idea Scratchpads"],
+                html: `
+                <div class="w-full max-w-xl p-6 bg-yellow-200 border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] rounded-none text-black text-left font-bold space-y-4">
+                    <!-- 1. Header & 2. Status Badge -->
+                    <div class="bg-black text-white p-2.5 text-center text-xs tracking-wider uppercase flex justify-between items-center">
+                        <span>Neo-Brutalist Form Workspace</span>
+                        <span id="nb_status" class="bg-yellow-400 text-black px-2 py-0.5 border border-black font-black text-[9px]">QUEUE: ACTIVE</span>
+                    </div>
+
+                    <!-- Brutalist Form Containing 10+ Different Elements -->
+                    <div class="space-y-4 text-xs">
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- 3. Text Input -->
+                            <div>
+                                <label class="block uppercase mb-1">Task Title (Input)</label>
+                                <input type="text" id="nb_title" class="w-full p-2 border-2 border-black bg-white focus:bg-pink-100 outline-none text-xs" value="Brutalist_Campaign_V2">
+                            </div>
+                            <!-- 4. Select -->
+                            <div>
+                                <label class="block uppercase mb-1">Priority (Select)</label>
+                                <select id="nb_urgency" class="w-full p-2 border-2 border-black bg-white outline-none text-xs">
+                                    <option>Very Urgent (High)</option>
+                                    <option>Normal (Medium)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 5. Range Slider -->
+                        <div>
+                            <label class="block uppercase mb-1">Budget Allocation: <span id="nb_budgetVal">200</span>$</label>
+                            <input type="range" id="nb_budget" class="w-full accent-black h-2 border-2 border-black bg-white" min="50" max="500" value="200">
+                        </div>
+
+                        <!-- 6. Select 2 -->
+                        <div>
+                            <label class="block uppercase mb-1">Target Channel</label>
+                            <select id="nb_channel" class="w-full p-2 border-2 border-black bg-white outline-none text-xs">
+                                <option>Social Media Campaign</option>
+                                <option>Email Marketing</option>
+                            </select>
+                        </div>
+
+                        <!-- 7. Checkbox & 8. Radio Groups -->
+                        <div class="grid grid-cols-2 gap-3 p-3 border-2 border-black bg-pink-100">
+                            <label class="flex items-center gap-1.5 cursor-pointer">
+                                <input type="checkbox" id="nb_alert" checked class="w-4 h-4 rounded-none border-2 border-black accent-black">
+                                <span>Enable Notifications</span>
+                            </label>
+                            <div class="flex flex-col gap-0.5">
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" id="nb_format_html" name="nb_format" checked class="accent-black">
+                                    <span>HTML Output format</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 9. Textarea -->
+                        <div>
+                            <label class="block uppercase mb-1">Campaign Description Text (Textarea)</label>
+                            <textarea id="nb_desc" rows="2" class="w-full p-2 border-2 border-black bg-white outline-none text-xs" placeholder="Write the detailed description..."></textarea>
+                        </div>
+
+                        <!-- 10. Progress Bar (Block Style) -->
+                        <div class="space-y-1">
+                            <span class="block uppercase text-[10px]">Campaign Preparation Progress</span>
+                            <div class="w-full h-5 border-2 border-black bg-white overflow-hidden p-0.5 flex">
+                                <div class="w-[65%] h-full bg-pink-400 border-r-2 border-black"></div>
+                                <span class="pl-2 text-[10px] self-center">65%</span>
+                            </div>
+                        </div>
+
+                        <!-- 11. Table / List Element -->
+                        <div class="border-2 border-black bg-white p-2 text-[10px] space-y-1 max-h-12 overflow-y-auto">
+                            <div class="flex justify-between border-b-2 border-black pb-0.5 mb-0.5">
+                                <span>TARGET GROUP</span>
+                                <span>STATUS</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Developers_SaaS</span>
+                                <span class="text-green-600">Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 12. Buttons -->
+                    <div class="flex gap-2 justify-end pt-3 border-t-2 border-black mt-3">
+                        <button id="nb_btn_reset" class="px-3 py-1.5 border-2 border-black bg-white active:translate-y-0.5 min-w-[80px]">Clear</button>
+                        <button id="nb_btn_submit" class="px-4 py-1.5 border-2 border-black bg-yellow-400 shadow-[2px_2px_0px_0px_#000] active:translate-y-0.5 min-w-[80px]">Save</button>
+                    </div>
+                </div>`
+            },
+            {
+                id: 19,
+                name: "Claymorphism",
+                desc: "Soft clay/dough-looking, modern and friendly interface elements formed by combining inner and outer double shadows.",
+                app: "Personal assistants, creative portfolio tools, playful/fun small panels",
+                icon: "fa-solid fa-palette",
+                classes: "bg-blue-100 text-slate-800 shadow-[10px_10px_20px_rgba(0,0,0,0.06),inset_-8px_-8px_16px_rgba(0,0,0,0.1)] rounded-3xl",
+                tips: [
+                    "Use double inner shadows: one bright white inner shadow from the top-left, and one dark faded inner shadow from the bottom-right.",
+                    "Choose background colors entirely in pastel tones."
+                ],
+                useCases: ["Personal Journals", "Playful Education Platforms", "Creative AI Assistants"],
+                html: `
+                <div class="w-full max-w-xl p-6 clay-card rounded-[30px] text-slate-800 text-left font-sans space-y-4" style="padding: var(--custom-padding);">
+                    <!-- 1. Header & 2. Status Badge -->
+                    <div class="flex justify-between items-center border-b border-pink-200 dark:border-pink-900 pb-2.5">
+                        <div>
+                            <span class="text-[9px] font-bold text-pink-500 uppercase block">Creative Scratchpad</span>
+                            <h3 class="text-sm font-bold text-slate-700 dark:text-pink-100">Claymorphic Workspace</h3>
+                        </div>
+                        <span id="cl_badge" class="bg-pink-100 dark:bg-pink-950 text-pink-600 dark:text-pink-300 text-[9px] px-2 py-0.5 rounded-full font-bold shadow-inner">CLAY MODULE</span>
+                    </div>
+
+                    <!-- Claymorphic Form Containing 10+ Different Elements -->
+                    <div class="space-y-4 text-xs text-slate-700 dark:text-slate-300">
+                        <div class="grid grid-cols-2 gap-3">
+                            <!-- 3. Text Input -->
+                            <div>
+                                <label class="block font-bold text-slate-500 mb-1 uppercase text-[9px]">Username (Input)</label>
+                                <input type="text" id="cl_username" class="w-full p-2 bg-white/70 border-none outline-none rounded-2xl text-xs shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)] text-slate-700" value="Soft_Clay_Mode">
+                            </div>
+                            <!-- 4. Select -->
+                            <div>
+                                <label class="block font-bold text-slate-500 mb-1 uppercase text-[9px]">Avatar Character (Select)</label>
+                                <select id="cl_avatar" class="w-full p-2 bg-white/70 border-none outline-none rounded-2xl text-xs shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)] text-slate-700">
+                                    <option>Agent Rabbit</option>
+                                    <option>Agent Bear</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 5. Range Slider -->
+                        <div>
+                            <label class="block font-bold text-slate-500 mb-1 uppercase text-[9px]">Fun Level (Slider): <span id="cl_funVal">80</span>%</label>
+                            <div class="bg-white/50 p-2 rounded-2xl shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)]">
+                                <input type="range" id="cl_fun" class="w-full accent-pink-500 h-1 cursor-pointer bg-slate-200" min="10" max="100" value="80">
+                            </div>
+                        </div>
+
+                        <!-- 6. Select 2 -->
+                        <div>
+                            <label class="block font-bold text-slate-500 mb-1 uppercase text-[9px]">Class Selection</label>
+                            <select id="cl_class" class="w-full p-2 bg-white/70 border-none outline-none rounded-2xl text-xs shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)] text-slate-700">
+                                <option>Class A Membership</option>
+                                <option>Class B Membership</option>
+                            </select>
+                        </div>
+
+                        <!-- 7. Checkbox & 8. Radio Groups -->
+                        <div class="grid grid-cols-2 gap-3 bg-white/30 p-2.5 rounded-2xl shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)]">
+                            <label class="flex items-center gap-1.5 cursor-pointer">
+                                <input type="checkbox" id="cl_private" checked class="rounded-full accent-pink-500">
+                                <span>Private Workspace</span>
+                            </label>
+                            <div class="flex gap-2">
+                                <label class="flex items-center gap-1 cursor-pointer">
+                                    <input type="radio" id="cl_theme_pink" name="cl_theme" checked class="accent-pink-500">
+                                    <span>Pink Theme</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 9. Textarea -->
+                        <div>
+                            <label class="block font-bold text-slate-500 mb-1 uppercase text-[9px]">Idea Notebook (Textarea)</label>
+                            <textarea id="cl_ideas" rows="2" class="w-full p-2 bg-white/70 border-none outline-none rounded-2xl text-xs shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)] text-slate-700" placeholder="Write your ideas here..."></textarea>
+                        </div>
+
+                        <!-- 10. Progress Bar -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-[8px] text-slate-400">
+                                <span>Upload Status (Progress)</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="w-full h-3 bg-white/50 rounded-full overflow-hidden p-0.5 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)]">
+                                <div class="w-[90%] h-full bg-pink-400 rounded-full shadow-[inset_2px_2px_4px_rgba(255,255,255,0.4)]"></div>
+                            </div>
+                        </div>
+
+                        <!-- 11. Bulut Dosyalar Tablo Listesi -->
+                        <div class="bg-white/50 p-2 rounded-2xl shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)] text-[9px] text-slate-500 max-h-12 overflow-y-auto">
+                            <div class="flex justify-between border-b border-pink-100 pb-0.5">
+                                <span>FILE</span>
+                                <span>STATUS</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>clay_design_draft.png</span>
+                                <span class="text-pink-500 font-bold">Saved</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 12. Buttons -->
+                    <div class="flex gap-2 justify-end pt-3 border-t border-pink-100 dark:border-pink-900 mt-3">
+                        <button id="cl_btn_clear" class="px-3 py-1.5 bg-white/80 hover:bg-white rounded-full text-slate-600 shadow-[4px_4px_10px_rgba(0,0,0,0.05)] active:shadow-inner">Clear</button>
+                        <button id="cl_btn_save" class="px-4 py-1.5 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-full shadow-[4px_4px_10px_rgba(244,63,94,0.3)] active:shadow-inner">Save</button>
+                    </div>
+                </div>`
+            }
+        ];
+
+        let activeStyle = designStyles[0];
+
+        // INITIALIZE ON PAGE LOAD
+        window.onload = function() {
+            renderSidebar();
+            selectStyle(1);
+            generateMatrix();
+
+            // Theme Toggle Listener
+            document.getElementById('themeToggle').addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+            });
+
+            // GLOBAL EVENT LISTENER SYSTEM (Interactivity)
+            document.getElementById('demoContainer').addEventListener('input', function(e) {
+                let id = e.target.id || e.target.name || 'Unknown Input';
+                let val = e.target.value;
+                if (e.target.type === 'checkbox') val = e.target.checked;
+                
+                // Write to event log
+                logEvent(`[Form Input] ID: ${id} -> New Value: ${val}`);
+
+                // If it is a range slider, update the live value label
+                let valLabel = document.getElementById(id + 'Val');
+                if (valLabel) {
+                    valLabel.innerText = val;
+                }
+            });
+
+            document.getElementById('demoContainer').addEventListener('change', function(e) {
+                let id = e.target.id || e.target.name || 'Unknown Input';
+                logEvent(`[Action Triggered] Changed Element: ${id}`);
+            });
+        };
+
+        // EVENT LOG PANEL CONTROL
+        function logEvent(message) {
+            const logPanel = document.getElementById('eventLog');
+            const p = document.createElement('p');
+            p.innerText = `> ${message}`;
+            logPanel.appendChild(p);
+            logPanel.scrollTop = logPanel.scrollHeight;
+        }
+
+        // CUSTOMIZER UPDATES (Live Variable Assignments)
+        function updateCustomizer() {
+            const radius = document.getElementById('inputRadius').value;
+            const padding = document.getElementById('inputPadding').value;
+
+            document.getElementById('labelRadius').innerText = `${radius}px`;
+            document.getElementById('labelPadding').innerText = `${padding}px`;
+
+            // Apply CSS variables to the HTML element
+            const previewEl = document.querySelector('#demoContainer > div');
+            if (previewEl) {
+                previewEl.style.setProperty('--custom-radius', `${radius}px`);
+                previewEl.style.setProperty('--custom-padding', `${padding}px`);
+            }
+
+            // Refresh the MD prompt file
+            generateMdRules();
+        }
+
+        function setThemeColor(colorName) {
+            const colors = {
+                'indigo-600': '#4f46e5',
+                'emerald-500': '#10b981',
+                'rose-500': '#f43f5e',
+                'cyan-400': '#22d3ee',
+                'amber-500': '#f59e0b'
+            };
+            const previewEl = document.querySelector('#demoContainer > div');
+            if (previewEl) {
+                previewEl.style.setProperty('--accent-color', colors[colorName]);
+            }
+            logEvent(`Accent color changed: ${colorName}`);
+            generateMdRules();
+        }
+
+        // RENDER THE LEFT MENU
+        function renderSidebar() {
+            const menuContainer = document.getElementById('stylesMenu');
+            menuContainer.innerHTML = '';
+
+            designStyles.forEach(style => {
+                const link = document.createElement('a');
+                link.href = `#style-${style.id}`;
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    selectStyle(style.id);
+                };
+                link.id = `sidebar-link-${style.id}`;
+                link.className = "flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-950 dark:hover:text-slate-100 text-xs font-semibold cursor-pointer transition-all";
+                link.innerHTML = `
+                    <div class="flex items-center space-x-3 truncate">
+                        <div class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center shrink-0">
+                            <i class="${style.icon}"></i>
+                        </div>
+                        <span class="truncate">${style.id}. ${style.name}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-[10px] opacity-0 transition-opacity shrink-0"></i>
+                `;
+                menuContainer.appendChild(link);
+            });
+        }
+
+        // TAB SELECTOR (RIGHT PANEL)
+        function switchRightTab(tabName) {
+            const tabSecrets = document.getElementById('tabBtnSecrets');
+            const tabCustomize = document.getElementById('tabBtnCustomize');
+            const tabMd = document.getElementById('tabBtnMd');
+            
+            const contentSecrets = document.getElementById('tabContentSecrets');
+            const contentCustomize = document.getElementById('tabContentCustomize');
+            const contentMd = document.getElementById('tabContentMd');
+
+            // Deactivate all tabs
+            [tabSecrets, tabCustomize, tabMd].forEach(t => t.className = "flex-1 py-3 px-2 text-center font-semibold text-xs border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-950 dark:hover:text-white flex items-center justify-center gap-1.5 transition-all");
+            [contentSecrets, contentCustomize, contentMd].forEach(c => c.classList.add('hidden'));
+
+            if (tabName === 'secrets') {
+                tabSecrets.className = "flex-1 py-3 px-2 text-center font-bold text-xs border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 flex items-center justify-center gap-1.5";
+                contentSecrets.classList.remove('hidden');
+            } else if (tabName === 'customize') {
+                tabCustomize.className = "flex-1 py-3 px-2 text-center font-bold text-xs border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 flex items-center justify-center gap-1.5";
+                contentCustomize.classList.remove('hidden');
+            } else {
+                tabMd.className = "flex-1 py-3 px-2 text-center font-bold text-xs border-b-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 flex items-center justify-center gap-1.5";
+                contentMd.classList.remove('hidden');
+                generateMdRules();
+            }
+        }
+
+        // SELECT A STYLE AND LOAD ITS DETAILS
+        function selectStyle(id) {
+            activeStyle = designStyles.find(s => s.id === id);
+            if (!activeStyle) return;
+
+            // Update the active item in the sidebar
+            designStyles.forEach(s => {
+                const element = document.getElementById(`sidebar-link-${s.id}`);
+                if (element) {
+                    if (s.id === id) {
+                        element.classList.add('bg-indigo-50', 'dark:bg-indigo-950/40', 'text-indigo-600', 'dark:text-indigo-400');
+                        element.classList.remove('text-slate-600', 'dark:text-slate-400');
+                        element.querySelector('i.fa-chevron-right').classList.remove('opacity-0');
+                    } else {
+                        element.classList.remove('bg-indigo-50', 'dark:bg-indigo-950/40', 'text-indigo-600', 'dark:text-indigo-400');
+                        element.classList.add('text-slate-600', 'dark:text-slate-400');
+                        element.querySelector('i.fa-chevron-right').classList.add('opacity-0');
+                    }
+                }
+            });
+
+            // Fill in the required details
+            document.getElementById('activeStyleId').innerText = `STIL-${activeStyle.id}`;
+            document.getElementById('activeStyleName').innerText = activeStyle.name;
+            document.getElementById('activeStyleDesc').innerText = activeStyle.desc;
+            document.getElementById('activeStyleApp').innerText = activeStyle.app;
+            document.getElementById('cssClassesBlock').innerText = activeStyle.classes;
+
+            // Fill in the tips
+            const tipsContainer = document.getElementById('styleTips');
+            tipsContainer.innerHTML = '';
+            activeStyle.tips.forEach(tip => {
+                const li = document.createElement('li');
+                li.innerText = tip;
+                tipsContainer.appendChild(li);
+            });
+
+            // Sample application tags
+            const useCasesContainer = document.getElementById('useCasesContainer');
+            useCasesContainer.innerHTML = '';
+            activeStyle.useCases.forEach(uc => {
+                const span = document.createElement('span');
+                span.className = "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] px-2 py-1 rounded-md font-medium border border-slate-200/50 dark:border-slate-700/50";
+                span.innerText = uc;
+                useCasesContainer.appendChild(span);
+            });
+
+            // Swap the HTML preview
+            const demoContainer = document.getElementById('demoContainer');
+            demoContainer.style.opacity = '0';
+            setTimeout(() => {
+                demoContainer.innerHTML = activeStyle.html;
+                demoContainer.style.opacity = '1';
+                
+                // Assign default custom variables
+                updateCustomizer();
+            }, 150);
+
+            logEvent(`Style selected: ${activeStyle.name}`);
+        }
+
+        // FUNCTION THAT DYNAMICALLY GENERATES THE MD RULE FILE
+        function generateMdRules() {
+            if (!activeStyle) return;
+
+            const radius = document.getElementById('inputRadius')?.value || '12';
+            const padding = document.getElementById('inputPadding')?.value || '20';
+
+            const mdContent = `# Design Rule: ${activeStyle.name}
+## Design Style Analysis
+${activeStyle.desc}
+
+## Classes and CSS Definitions
+\`\`\`css
+/* Main Class Groups */
+${activeStyle.classes}
+
+/* Live Customizer Variables */
+--custom-radius: ${radius}px;
+--custom-padding: ${padding}px;
+\`\`\`
+
+## AI Developer Instructions (System Instruction)
+When the user asks you to create a web interface or component, STRICTLY adhere to the following guidelines:
+
+${activeStyle.tips.map((tip, idx) => `${idx + 1}. **${tip}**`).join('\n')}
+
+## Suitable Use Cases
+${activeStyle.useCases.map(uc => `- ${uc}`).join('\n')}
+
+## UI Sample Code Skeleton (Developer Template - Contains 10+ Active Form Components)
+Apply the following skeleton rule when building the interface component:
+\`\`\`html
+<!-- ${activeStyle.name} Interface Component -->
+${activeStyle.html.trim()}
+\`\`\`
+`;
+            document.getElementById('mdRulesCodeBlock').innerText = mdContent;
+        }
+
+        // RENDER THE ENTIRE MATRIX
+        function generateMatrix() {
+            const matrixContainer = document.getElementById('matrixGrid');
+            matrixContainer.innerHTML = '';
+
+            designStyles.forEach(style => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-50 dark:bg-slate-950/50 p-5 rounded-xl border border-slate-200/60 dark:border-slate-800/80 flex flex-col justify-between hover:border-indigo-500 transition-all cursor-pointer";
+                card.onclick = () => {
+                    selectStyle(style.id);
+                    hideStylesMatrix();
+                };
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 font-mono text-[10px] px-2 py-0.5 rounded font-bold">STIL-${style.id}</span>
+                            <h4 class="font-bold text-sm truncate">${style.name}</h4>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">${style.desc}</p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-wider block mb-1">Best Fit:</span>
+                        <p class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400">${style.app}</p>
+                    </div>
+                `;
+                matrixContainer.appendChild(card);
+            });
+        }
+
+        // COPY FUNCTIONS
+        function copyCSS() {
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = activeStyle.classes;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+
+            showToast("CSS classes copied successfully!");
+        }
+
+        function copyMdRules() {
+            const mdContent = document.getElementById('mdRulesCodeBlock').innerText;
+            const dummy = document.createElement('textarea');
+            document.body.appendChild(dummy);
+            dummy.value = mdContent;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+
+            showToast("AI .MD rule file copied successfully!");
+        }
+
+        // SHOW TOAST
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = message;
+            toast.className = toast.className.replace('translate-y-20 opacity-0', 'translate-y-0 opacity-100');
+            
+            setTimeout(() => {
+                toast.className = toast.className.replace('translate-y-0 opacity-100', 'translate-y-20 opacity-0');
+            }, 3000);
+        }
+
+        // MODAL CONTROLS
+        function showStylesMatrix() {
+            document.getElementById('matrixModal').classList.remove('hidden');
+        }
+        function hideStylesMatrix() {
+            document.getElementById('matrixModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
